@@ -1,0 +1,1034 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Meu Bairro - Problemas Registrados</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        body {
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+
+            height: 70px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            color: #2563eb;
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            background: #2563eb;
+
+            color: white;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .new-badge {
+
+            background: #16a34a;
+
+            color: white;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .map-button {
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 10px 16px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        .map-button:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        /* =========================
+           CONTEÚDO
+        ========================== */
+
+        .container {
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            padding: 35px 20px 50px;
+        }
+
+
+        .page-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-header h1 {
+
+            font-size: 28px;
+        }
+
+
+        .subtitle {
+
+            color: #6b7280;
+
+            margin-bottom: 28px;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           LISTA
+        ========================== */
+
+        .problems-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+        }
+
+
+        .problem {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            display: grid;
+
+            grid-template-columns: 58px 1fr auto;
+
+            gap: 17px;
+
+            align-items: start;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            border: 1px solid #e5e7eb;
+
+            position: relative;
+
+            transition: 0.2s;
+        }
+
+
+        .problem:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.09);
+        }
+
+
+        /* Problema não lido */
+
+        .problem.unread {
+
+            border-left: 4px solid #16a34a;
+
+            background: #fcfffc;
+        }
+
+
+        /* =========================
+           ÍCONE
+        ========================== */
+
+        .problem-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            color: white;
+        }
+
+
+        .red {
+
+            background: #ef4444;
+        }
+
+
+        .green {
+
+            background: #10b981;
+        }
+
+
+        .orange {
+
+            background: #f59e0b;
+        }
+
+
+        .purple {
+
+            background: #8b5cf6;
+        }
+
+
+        .cyan {
+
+            background: #06b6d4;
+        }
+
+
+        /* =========================
+           INFORMAÇÕES
+        ========================== */
+
+        .problem-content h2 {
+
+            font-size: 17px;
+
+            margin-bottom: 7px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        .category {
+
+            font-size: 11px;
+
+            padding: 4px 8px;
+
+            border-radius: 10px;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            font-weight: bold;
+        }
+
+
+        .problem-info {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 15px;
+
+            margin-bottom: 9px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+
+        .description {
+
+            color: #4b5563;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            max-width: 700px;
+        }
+
+
+        /* =========================
+           DATA
+        ========================== */
+
+        .problem-date {
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================
+           PONTO DE NOTIFICAÇÃO
+        ========================== */
+
+        .notification-dot {
+
+            width: 9px;
+
+            height: 9px;
+
+            background: #16a34a;
+
+            border-radius: 50%;
+
+            display: inline-block;
+
+            box-shadow: 0 0 0 3px #dcfce7;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            font-size: 11px;
+
+            padding: 5px 9px;
+
+            border-radius: 10px;
+
+            background: #f3f4f6;
+
+            color: #6b7280;
+        }
+
+
+        .status.new {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           RODAPÉ
+        ========================== */
+
+        .footer-info {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           RESPONSIVO
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                padding: 0 15px;
+            }
+
+
+            .logo {
+
+                font-size: 19px;
+            }
+
+
+            .new-badge {
+
+                display: none;
+            }
+
+
+            .problem {
+
+                grid-template-columns: 50px 1fr;
+            }
+
+
+            .problem-icon {
+
+                width: 50px;
+
+                height: 50px;
+
+                font-size: 21px;
+            }
+
+
+            .problem-date {
+
+                grid-column: 2;
+
+                margin-top: -5px;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🏠
+            </div>
+
+            Meu Bairro
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <span class="new-badge">
+                2 novos
+            </span>
+
+
+            <button class="map-button"
+                    onclick="voltarMapa()">
+
+                🗺️ Mapa
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         CONTEÚDO
+    ========================== -->
+
+    <main class="container">
+
+
+        <div class="page-header">
+
+            <h1>
+                Problemas registrados
+            </h1>
+
+        </div>
+
+
+        <p class="subtitle">
+
+            Confira os problemas registrados
+            pelos moradores do bairro.
+
+        </p>
+
+
+
+        <!-- =========================
+             LISTA DE PROBLEMAS
+        ========================== -->
+
+        <section class="problems-list">
+
+
+            <!-- PROBLEMA 1 -->
+
+            <article class="problem unread">
+
+
+                <div class="problem-icon red">
+
+                    🏠
+
+                </div>
+
+
+                <div class="problem-content">
+
+
+                    <h2>
+
+                        Problema de iluminação
+
+                        <span class="category">
+                            Moradia
+                        </span>
+
+                        <span class="notification-dot">
+                        </span>
+
+                    </h2>
+
+
+                    <div class="problem-info">
+
+                        <span>
+                            👤 João da Silva
+                        </span>
+
+                        <span>
+                            📍 Rua das Flores, 125
+                        </span>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        Moradores informaram que a iluminação
+                        pública está apresentando problemas
+                        neste local.
+
+                    </p>
+
+
+                    <span class="status new">
+                        Novo
+                    </span>
+
+                </div>
+
+
+                <div class="problem-date">
+
+                    📅 02/09/2026
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- PROBLEMA 2 -->
+
+            <article class="problem unread">
+
+
+                <div class="problem-icon green">
+
+                    ✚
+
+                </div>
+
+
+                <div class="problem-content">
+
+
+                    <h2>
+
+                        Unidade de Saúde
+
+                        <span class="category">
+                            Saúde
+                        </span>
+
+                        <span class="notification-dot">
+                        </span>
+
+                    </h2>
+
+
+                    <div class="problem-info">
+
+                        <span>
+                            👤 Maria Oliveira
+                        </span>
+
+                        <span>
+                            📍 Avenida Central, 450
+                        </span>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        Unidade de atendimento básico
+                        disponível para moradores do bairro.
+
+                    </p>
+
+
+                    <span class="status new">
+                        Novo
+                    </span>
+
+                </div>
+
+
+                <div class="problem-date">
+
+                    📅 01/09/2026
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- PROBLEMA 3 -->
+
+            <article class="problem">
+
+
+                <div class="problem-icon orange">
+
+                    🎓
+
+                </div>
+
+
+                <div class="problem-content">
+
+
+                    <h2>
+
+                        Escola Municipal
+
+                        <span class="category">
+                            Educação
+                        </span>
+
+                    </h2>
+
+
+                    <div class="problem-info">
+
+                        <span>
+                            👤 Carlos Mendes
+                        </span>
+
+                        <span>
+                            📍 Rua da Educação, 80
+                        </span>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        Escola municipal localizada na
+                        região central do bairro.
+
+                    </p>
+
+
+                    <span class="status">
+                        Visualizado
+                    </span>
+
+                </div>
+
+
+                <div class="problem-date">
+
+                    📅 30/08/2026
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- PROBLEMA 4 -->
+
+            <article class="problem">
+
+
+                <div class="problem-icon purple">
+
+                    🛡️
+
+                </div>
+
+
+                <div class="problem-content">
+
+
+                    <h2>
+
+                        Posto de Segurança
+
+                        <span class="category">
+                            Segurança
+                        </span>
+
+                    </h2>
+
+
+                    <div class="problem-info">
+
+                        <span>
+                            👤 Ana Costa
+                        </span>
+
+                        <span>
+                            📍 Rua da Paz, 210
+                        </span>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        Ponto de apoio e atendimento
+                        para questões relacionadas à segurança.
+
+                    </p>
+
+
+                    <span class="status">
+                        Visualizado
+                    </span>
+
+                </div>
+
+
+                <div class="problem-date">
+
+                    📅 29/08/2026
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- PROBLEMA 5 -->
+
+            <article class="problem">
+
+
+                <div class="problem-icon cyan">
+
+                    ⚽
+
+                </div>
+
+
+                <div class="problem-content">
+
+
+                    <h2>
+
+                        Praça do Bairro
+
+                        <span class="category">
+                            Lazer
+                        </span>
+
+                    </h2>
+
+
+                    <div class="problem-info">
+
+                        <span>
+                            👤 Pedro Santos
+                        </span>
+
+                        <span>
+                            📍 Praça Central
+                        </span>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        Área pública destinada ao lazer,
+                        esportes e convivência dos moradores.
+
+                    </p>
+
+
+                    <span class="status">
+                        Visualizado
+                    </span>
+
+                </div>
+
+
+                <div class="problem-date">
+
+                    📅 28/08/2026
+
+                </div>
+
+
+            </article>
+
+
+        </section>
+
+
+        <p class="footer-info">
+
+            Exibindo os 5 problemas registrados no bairro.
+
+        </p>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        function voltarMapa() {
+
+            /*
+             * Troque "index.html" pelo nome
+             * do arquivo da sua Tela 1.
+             */
+
+            window.location.href = "index.html";
+
+        }
+
+
+        /*
+         * Ao clicar em um problema novo,
+         * ele deixa de ser considerado não lido.
+         */
+
+        const problemas =
+            document.querySelectorAll(".problem.unread");
+
+
+        problemas.forEach(function(problema) {
+
+
+            problema.addEventListener("click", function() {
+
+
+                problema.classList.remove("unread");
+
+
+                const ponto =
+                    problema.querySelector(
+                        ".notification-dot"
+                    );
+
+
+                if (ponto) {
+
+                    ponto.remove();
+
+                }
+
+
+                const status =
+                    problema.querySelector(".status");
+
+
+                if (status) {
+
+                    status.innerText =
+                        "Visualizado";
+
+                    status.classList.remove("new");
+
+                }
+
+
+                atualizarContador();
+
+            });
+
+        });
+
+
+
+        function atualizarContador() {
+
+
+            const quantidade =
+                document.querySelectorAll(
+                    ".problem.unread"
+                ).length;
+
+
+            const badge =
+                document.querySelector(".new-badge");
+
+
+            if (quantidade > 0) {
+
+                badge.innerText =
+                    quantidade + " novos";
+
+                badge.style.display =
+                    "inline-block";
+
+            } else {
+
+                badge.innerText =
+                    "Nenhum novo";
+
+                badge.style.background =
+                    "#9ca3af";
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```
