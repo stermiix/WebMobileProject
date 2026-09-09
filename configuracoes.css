@@ -1,0 +1,212 @@
+/* ==============================
+   CONTEÚDO
+============================== */
+
+main {
+    width: 100%;
+    max-width: 850px;
+    margin: 34px auto;
+    padding: 0 20px;
+}
+
+/* TÍTULO */
+
+.titulo {
+    margin-bottom: 25px;
+}
+
+.titulo h1 {
+    font-size: 29px;
+    margin-bottom: 7px;
+    color: #172033;
+}
+
+.titulo p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* ==============================
+   CARD DO PERFIL
+============================== */
+
+.perfil {
+    background: white;
+    border: 1px solid #e1e5eb;
+    border-radius: 13px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    background: #2463eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.perfil-info h2 {
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+
+.perfil-info p {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+/* ==============================
+   SEÇÕES
+============================== */
+
+.secao {
+    background: white;
+    border: 1px solid #e1e5eb;
+    border-radius: 13px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.secao-titulo {
+    padding: 17px 18px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ==============================
+   OPÇÕES
+============================== */
+
+.opcao {
+    min-height: 76px;
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.opcao:last-child {
+    border-bottom: none;
+}
+
+.opcao-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* ÍCONES */
+
+.icone {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #eef4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.opcao-texto h3 {
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.opcao-texto p {
+    font-size: 13px;
+    color: #718096;
+}
+
+/* ==============================
+   TOGGLE
+============================== */
+
+.toggle {
+    width: 44px;
+    height: 24px;
+    background: #2463eb;
+    border-radius: 20px;
+    position: relative;
+}
+
+.toggle::after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+/* ==============================
+   LINKS
+============================== */
+
+.opcao-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #172033;
+}
+
+.seta {
+    color: #94a3b8;
+    font-size: 22px;
+}
+
+/* ==============================
+   BOTÃO SAIR
+============================== */
+
+.sair {
+    width: 100%;
+    padding: 14px;
+    background: white;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sair:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* ==============================
+   RESPONSIVO
+============================== */
+
+@media (max-width: 700px) {
+    main {
+        margin-top: 25px;
+    }
+
+    .titulo h1 {
+        font-size: 25px;
+    }
+
+    .perfil {
+        padding: 20px;
+    }
+}

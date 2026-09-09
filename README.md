@@ -138,4 +138,27 @@ O protótipo também apresenta elementos interativos que demonstram como o siste
 
 Essas interações contribuem para o caráter dinâmico do projeto, requisito previsto para o desenvolvimento da aplicação. A disciplina estabelece que o projeto deve ser desenvolvido utilizando HTML5, CSS3 e JavaScript e possuir, no mínimo, duas interações com JavaScript.
 
+Organização dos arquivos
+
+O projeto é composto por cinco arquivos HTML, um para cada tela, e seis arquivos CSS.
+
+Na primeira versão, todo o CSS estava escrito dentro dos próprios arquivos HTML, em blocos <style>. Como as cinco telas compartilham o mesmo cabeçalho, o mesmo logotipo e o mesmo menu de navegação, essas regras apareciam repetidas nos cinco arquivos. Qualquer ajuste no cabeçalho exigia a mesma alteração em cinco lugares diferentes, o que aumenta a chance de as telas ficarem inconsistentes entre si.
+
+O CSS foi então separado do HTML e organizado em arquivos externos, seguindo dois critérios:
+
+* O arquivo style.css reúne as regras compartilhadas por todas as telas: a normalização inicial de margens e espaçamentos, o corpo da página, os links, o cabeçalho, o logotipo e o menu de navegação, incluindo a versão desses elementos para telas de até 700 pixels de largura.
+
+* Os arquivos index.css, criar.css, detalhes.css, notificacoes.css e configuracoes.css contêm apenas as regras específicas de cada tela, como o mapa do bairro, o formulário de registro, a lista de notificações e os cartões de informação.
+
+Cada arquivo HTML carrega dois arquivos de estilo, nesta ordem:
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+
+A ordem em que os arquivos são declarados é relevante. O navegador lê os dois na sequência e forma uma única lista de regras; quando duas regras de mesma especificidade definem a mesma propriedade, prevalece a última lida. Por isso o arquivo específico da tela é carregado depois do arquivo compartilhado, podendo ajustar pontualmente algo definido nele.
+
+Essa organização também permite que o navegador reaproveite o style.css já armazenado em cache ao navegar entre as telas, uma vez que o arquivo é o mesmo para todas.
+
+Durante a separação foram unificadas divergências que existiam entre as telas. O cabeçalho havia sido escrito de duas formas distintas ao longo do desenvolvimento: três telas utilizavam altura mínima de 70 pixels e cabeçalho fixo no topo da página, enquanto duas utilizavam altura fixa de 62 pixels com borda inferior. Existiam ainda pequenas diferenças de cor e de tamanho de fonte no logotipo, decorrentes de erros de digitação. Todas as telas passaram a utilizar a mesma definição, o que garante consistência visual durante a navegação.
+
 O protótipo inicial também fará parte da documentação do projeto, conforme solicitado no enunciado, que prevê a inclusão de imagens do protótipo e uma explicação do processo de ideação no README.md.
