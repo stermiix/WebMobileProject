@@ -47,6 +47,7 @@ main {
         #dbeafe,
         #bfdbfe
     );
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -157,6 +158,7 @@ main {
             #ffffff 54%,
             transparent 55%
         );
+
     background-size: 120px 120px;
     position: relative;
     display: flex;
@@ -254,6 +256,37 @@ main {
     border-color: #22c55e;
     color: #16a34a;
     background: #f0fdf4;
+}
+
+/* ==============================
+   VOTO SELECIONADO
+============================== */
+
+.voto.selecionado {
+    border-color: #2463eb;
+    background: #eff6ff;
+    color: #2463eb;
+}
+
+.voto.resolvido.selecionado {
+    border-color: #22c55e;
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+/* ==============================
+   MENSAGEM DE VOTO
+============================== */
+
+.mensagem-voto {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 9px;
+    background: #f0fdf4;
+    color: #15803d;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 /* ==============================
