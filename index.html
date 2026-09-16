@@ -2,195 +2,350 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Meu Bairro - Mapa</title>
+
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="index.css">
+
 </head>
+
 
 <body>
 
+
+    <!-- =========================
+         CABEÇALHO
+    ========================== -->
+
     <header>
+
 
         <a href="index.html" class="logo">
 
-            <div class="logo-icon">🏠</div>
+            <div class="logo-icon">
+                🏠
+            </div>
 
             Meu Bairro
 
         </a>
 
+
         <nav class="menu">
 
-            <a href="index.html" class="active">
+
+            <a href="index.html"
+               class="active">
+
                 🗺️ Mapa
+
             </a>
+
 
             <a href="notificacoes.html">
+
                 🔔 Notificações
+
             </a>
+
 
             <a href="criar.html">
+
                 ➕ Registrar
+
             </a>
 
+
             <a href="configuracoes.html">
+
                 ⚙️ Configurações
+
             </a>
+
 
         </nav>
 
+
     </header>
+
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
 
     <main class="container">
 
+
+        <!-- TÍTULO -->
+
         <section class="page-header">
 
-            <h1>Mapa do bairro</h1>
+
+            <h1>
+
+                Mapa do bairro
+
+            </h1>
+
 
             <p>
+
                 Veja os problemas registrados pela comunidade.
+
             </p>
+
 
         </section>
 
+
+
+        <!-- =========================
+             MAPA
+        ========================== -->
+
         <section class="mapa-card">
 
+
             <div class="mapa">
+
+
+                <!-- =========================
+                     QUADRAS
+                ========================== -->
 
                 <div class="quadra q1"></div>
                 <div class="quadra q2"></div>
                 <div class="quadra q3"></div>
                 <div class="quadra q4"></div>
 
+
                 <div class="quadra q5"></div>
                 <div class="quadra q6"></div>
                 <div class="quadra q7"></div>
                 <div class="quadra q8"></div>
+
 
                 <div class="quadra q9"></div>
                 <div class="quadra q10"></div>
                 <div class="quadra q11"></div>
                 <div class="quadra q12"></div>
 
+
+
+                <!-- =========================
+                     RUAS HORIZONTAIS
+                ========================== -->
+
                 <div class="rua-horizontal rua1">
+
                     Rua das Flores
+
                 </div>
+
 
                 <div class="rua-horizontal rua2">
+
                     Rua da Educação
+
                 </div>
+
 
                 <div class="rua-horizontal rua3">
+
                     Rua da Paz
+
                 </div>
+
+
+
+                <!-- =========================
+                     RUAS VERTICAIS
+                ========================== -->
 
                 <div class="rua-vertical ruav1">
+
                     Avenida Central
+
                 </div>
+
 
                 <div class="rua-vertical ruav2">
+
                     Rua Central
+
                 </div>
+
 
                 <div class="rua-vertical ruav3">
+
                     Avenida Principal
+
                 </div>
 
 
-                <!-- MARCADOR: LIXO -->
 
-                <a href="detalhes.html" title="Lixo acumulado">
+                <!-- =========================
+                     MARCADOR: LIXO
+                ========================== -->
+
+                <a href="detalhes.html"
+                   title="Lixo acumulado">
 
                     <div class="marcador limpeza m1">
+
                         🗑️
+
                     </div>
 
                 </a>
 
 
-                <!-- MARCADOR: ILUMINAÇÃO -->
 
-                <a href="detalhes.html" title="Iluminação pública">
+                <!-- =========================
+                     MARCADOR: ILUMINAÇÃO
+                ========================== -->
+
+                <a href="detalhes.html"
+                   title="Iluminação pública">
 
                     <div class="marcador iluminacao m2">
+
                         💡
+
                     </div>
 
                 </a>
 
 
-                <!-- MARCADOR: BURACO -->
 
-                <a href="detalhes.html" title="Buraco na rua">
+                <!-- =========================
+                     MARCADOR: BURACO
+                ========================== -->
+
+                <a href="detalhes.html"
+                   title="Buraco na rua">
 
                     <div class="marcador vias m3">
+
                         🕳️
+
                     </div>
 
                 </a>
 
 
-                <!-- MARCADOR: CALÇADA -->
 
-                <a href="detalhes.html" title="Calçada danificada">
+                <!-- =========================
+                     MARCADOR: CALÇADA
+                ========================== -->
+
+                <a href="detalhes.html"
+                   title="Calçada danificada">
 
                     <div class="marcador acessibilidade m4">
+
                         🚧
+
                     </div>
 
                 </a>
 
 
-                <!-- MARCADOR: VAZAMENTO -->
 
-                <a href="detalhes.html" title="Vazamento">
+                <!-- =========================
+                     MARCADOR: VAZAMENTO
+                ========================== -->
+
+                <a href="detalhes.html"
+                   title="Vazamento">
 
                     <div class="marcador saneamento m5">
+
                         💧
+
                     </div>
 
                 </a>
+
 
             </div>
 
 
-            <!-- LEGENDA -->
+
+            <!-- =========================
+                 LEGENDA
+            ========================== -->
 
             <div class="legenda">
 
-                <h2>Legenda:</h2>
+
+                <h2>
+
+                    Legenda:
+
+                </h2>
+
 
                 <div class="legenda-item">
+
                     <span class="legenda-cor limpeza"></span>
+
                     Limpeza
+
                 </div>
 
+
                 <div class="legenda-item">
+
                     <span class="legenda-cor iluminacao"></span>
+
                     Iluminação
+
                 </div>
 
+
                 <div class="legenda-item">
+
                     <span class="legenda-cor vias"></span>
+
                     Vias públicas
+
                 </div>
 
+
                 <div class="legenda-item">
+
                     <span class="legenda-cor acessibilidade"></span>
+
                     Acessibilidade
+
                 </div>
 
+
                 <div class="legenda-item">
+
                     <span class="legenda-cor saneamento"></span>
+
                     Saneamento
+
                 </div>
+
 
             </div>
 
 
-            <!-- AVISO -->
+
+            <!-- =========================
+                 AVISO
+            ========================== -->
 
             <div class="mapa-info">
 
@@ -200,9 +355,20 @@
 
             </div>
 
+
         </section>
 
+
     </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="index.js" defer></script>
+
 
 </body>
 
