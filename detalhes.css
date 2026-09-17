@@ -290,6 +290,29 @@ main {
 }
 
 /* ==============================
+   EXCLUIR PROBLEMA
+============================== */
+
+.excluir-problema {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    background: white;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.excluir-problema:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* ==============================
    RESPONSIVO
 ============================== */
 
