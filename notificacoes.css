@@ -24,6 +24,42 @@
 }
 
 /* =========================
+   BUSCA E FILTROS
+========================== */
+
+.filtros {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+#busca-input {
+    flex: 1;
+    min-width: 220px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+#busca-input:focus {
+    border-color: #2563eb;
+}
+
+#filtro-categoria {
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    background: white;
+    color: #374151;
+    cursor: pointer;
+}
+
+/* =========================
    CABEÇALHO DOS PROBLEMAS
 ========================== */
 
@@ -209,6 +245,12 @@
 .status.new {
     background: #dcfce7;
     color: #15803d;
+    font-weight: bold;
+}
+
+.status.resolved {
+    background: #dbeafe;
+    color: #1e40af;
     font-weight: bold;
 }
 
