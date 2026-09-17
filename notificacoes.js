@@ -3,10 +3,28 @@
 // ========================================
 
 
-// Pega os problemas criados pelo usuário
+// Problemas excluídos pelo usuário
+
+let problemasExcluidos =
+    JSON.parse(localStorage.getItem("problemasExcluidos")) || [];
+
+
+// Problemas marcados como resolvidos
+
+let problemasResolvidos =
+    JSON.parse(localStorage.getItem("problemasResolvidos")) || [];
+
+
+// Pega os problemas criados pelo usuário,
+// já removendo os que foram excluídos
 
 let problemasSalvos =
-    JSON.parse(localStorage.getItem("problemas")) || [];
+    (JSON.parse(localStorage.getItem("problemas")) || [])
+        .filter(function(problema) {
+
+            return !problemasExcluidos.includes(problema.id);
+
+        });
 
 
 // Elementos da página
@@ -122,6 +140,7 @@ const problemasFixos =
 
 
 // Cada problema antigo recebe seu ID fixo
+// (ou é removido do DOM, se tiver sido excluído)
 
 problemasFixos.forEach(function(link, index) {
 
@@ -129,8 +148,25 @@ problemasFixos.forEach(function(link, index) {
         index + 1;
 
 
+    if (problemasExcluidos.includes(idProblema)) {
+
+        link.remove();
+
+        return;
+
+    }
+
+
     link.href =
         "detalhes.html?problemaId=" +
+        idProblema;
+
+
+    // Grava o ID diretamente no card,
+    // para que ele possa ser lido depois
+    // sem depender da posição no DOM
+
+    link.querySelector(".problem").dataset.id =
         idProblema;
 
 });
@@ -140,40 +176,27 @@ problemasFixos.forEach(function(link, index) {
 // FUNÇÃO PARA DESCOBRIR O ID
 // ========================================
 
-// Esta função identifica corretamente
-// tanto os problemas antigos quanto
-// os problemas criados pelo usuário.
+// Como cada card agora guarda seu próprio
+// ID em um atributo data-id, tanto os
+// problemas fixos quanto os criados pelo
+// usuário podem ser identificados da
+// mesma forma, sem depender da posição
+// dele na lista.
 
-function obterIdProblema(problema, index) {
+function obterIdProblema(problema) {
 
-    // Os 5 primeiros são problemas fixos
-
-    if (index < 5) {
-
-        return index + 1;
-
-    }
+    const id =
+        problema.dataset.id;
 
 
-    // Depois dos 5 primeiros,
-    // são problemas criados pelo usuário.
+    if (id === undefined) {
 
-    const indiceNovo =
-        index - 5;
-
-
-    const novoProblema =
-        problemasSalvos[indiceNovo];
-
-
-    if (novoProblema) {
-
-        return novoProblema.id;
+        return null;
 
     }
 
 
-    return null;
+    return Number(id);
 
 }
 
@@ -208,6 +231,12 @@ function criarNotificacao(problema) {
         "problem",
         "unread"
     );
+
+
+    // Grava o ID no card
+
+    artigo.dataset.id =
+        problema.id;
 
 
     // ====================================
@@ -492,12 +521,11 @@ let problemasVisualizados =
 // ========================================
 
 problemas.forEach(
-    function(problema, index) {
+    function(problema) {
 
         const idProblema =
             obterIdProblema(
-                problema,
-                index
+                problema
             );
 
 
@@ -522,11 +550,79 @@ problemas.forEach(
 
 
 // ========================================
+// VERIFICA OS RESOLVIDOS
+// ========================================
+
+// Se o problema já foi marcado como
+// resolvido na tela de detalhes, o
+// badge aqui deve refletir isso.
+
+problemas.forEach(
+    function(problema) {
+
+        const idProblema =
+            obterIdProblema(
+                problema
+            );
+
+
+        if (
+            idProblema !== null &&
+            problemasResolvidos.includes(
+                idProblema
+            )
+        ) {
+
+            marcarComoResolvido(
+                problema
+            );
+
+        }
+
+    }
+);
+
+
+// ========================================
+// MARCAR COMO RESOLVIDO
+// ========================================
+
+function marcarComoResolvido(
+    problema
+) {
+
+    const status =
+        problema.querySelector(
+            ".status"
+        );
+
+
+    if (status) {
+
+        status.innerText =
+            "Resolvido";
+
+
+        status.classList.remove(
+            "new"
+        );
+
+
+        status.classList.add(
+            "resolved"
+        );
+
+    }
+
+}
+
+
+// ========================================
 // CLIQUE NAS NOTIFICAÇÕES
 // ========================================
 
 problemas.forEach(
-    function(problema, index) {
+    function(problema) {
 
         problema.addEventListener(
             "click",
@@ -534,8 +630,7 @@ problemas.forEach(
 
                 const idProblema =
                     obterIdProblema(
-                        problema,
-                        index
+                        problema
                     );
 
 
@@ -644,7 +739,13 @@ function marcarComoVisualizado(
         );
 
 
-    if (status) {
+    // Se já está resolvido, não sobrescreve
+    // o badge com "Visualizado".
+
+    if (
+        status &&
+        !status.classList.contains("resolved")
+    ) {
 
         status.innerText =
             "Visualizado";
@@ -718,3 +819,114 @@ function atualizarContador() {
 // ========================================
 
 atualizarContador();
+
+
+// ========================================
+// BUSCA E FILTRO POR CATEGORIA
+// ========================================
+
+const campoBusca =
+    document.querySelector("#busca-input");
+
+
+const seletorCategoria =
+    document.querySelector("#filtro-categoria");
+
+
+function filtrarProblemas() {
+
+    const termoBusca =
+        campoBusca.value.trim().toLowerCase();
+
+
+    const categoriaEscolhida =
+        seletorCategoria.value;
+
+
+    const cards =
+        document.querySelectorAll(".problem-link");
+
+
+    let visiveis = 0;
+
+
+    cards.forEach(function(card) {
+
+        const titulo =
+            card.querySelector("h3").innerText.toLowerCase();
+
+
+        const categoria =
+            card.querySelector(".category").innerText.trim();
+
+
+        const endereco =
+            card.querySelector(".problem-info").innerText.toLowerCase();
+
+
+        const descricao =
+            card.querySelector(".description").innerText.toLowerCase();
+
+
+        const combinaBusca =
+            titulo.includes(termoBusca) ||
+            endereco.includes(termoBusca) ||
+            descricao.includes(termoBusca);
+
+
+        const combinaCategoria =
+            categoriaEscolhida === "todas" ||
+            categoria === categoriaEscolhida;
+
+
+        if (combinaBusca && combinaCategoria) {
+
+            card.style.display = "block";
+
+            visiveis++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+
+    // ====================================
+    // ATUALIZA O TEXTO DE RODAPÉ
+    // ====================================
+
+    if (footerInfo) {
+
+        footerInfo.innerText =
+            "Exibindo " +
+            visiveis +
+            " de " +
+            cards.length +
+            " problemas registrados.";
+
+    }
+
+}
+
+
+if (campoBusca) {
+
+    campoBusca.addEventListener(
+        "input",
+        filtrarProblemas
+    );
+
+}
+
+
+if (seletorCategoria) {
+
+    seletorCategoria.addEventListener(
+        "change",
+        filtrarProblemas
+    );
+
+}
