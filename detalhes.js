@@ -77,6 +77,19 @@ const problemasFixos = {
 
 
 // ========================================
+// PROBLEMAS RESOLVIDOS
+// ========================================
+
+// Guarda os IDs dos problemas que a
+// comunidade já marcou como resolvidos.
+
+let problemasResolvidos =
+    JSON.parse(
+        localStorage.getItem("problemasResolvidos")
+    ) || [];
+
+
+// ========================================
 // IDENTIFICA O PROBLEMA SELECIONADO
 // ========================================
 
@@ -545,6 +558,37 @@ const areaVotacao =
     );
 
 
+// ========================================
+// APLICA VOTO JÁ REGISTRADO
+// ========================================
+
+// Se esse problema já foi marcado como
+// resolvido antes, o botão correspondente
+// já deve abrir a tela selecionado.
+
+if (
+    problemasResolvidos.includes(
+        problemaSelecionado.id
+    )
+) {
+
+    const botaoResolvido =
+        document.querySelector(
+            ".voto.resolvido"
+        );
+
+
+    if (botaoResolvido) {
+
+        botaoResolvido.classList.add(
+            "selecionado"
+        );
+
+    }
+
+}
+
+
 botoesVoto.forEach(
     function(botao) {
 
@@ -635,6 +679,57 @@ botoesVoto.forEach(
                 );
 
 
+                // ================================
+                // PERSISTE O VOTO NO LOCALSTORAGE
+                // ================================
+
+                const idAtual =
+                    problemaSelecionado.id;
+
+
+                if (
+                    botao.classList.contains(
+                        "resolvido"
+                    )
+                ) {
+
+                    if (
+                        !problemasResolvidos.includes(
+                            idAtual
+                        )
+                    ) {
+
+                        problemasResolvidos.push(
+                            idAtual
+                        );
+
+                    }
+
+                } else {
+
+                    // Voto "Ainda existe" desfaz
+                    // um "Resolvido" anterior
+
+                    problemasResolvidos =
+                        problemasResolvidos.filter(
+                            function(id) {
+
+                                return id !== idAtual;
+
+                            }
+                        );
+
+                }
+
+
+                localStorage.setItem(
+                    "problemasResolvidos",
+                    JSON.stringify(
+                        problemasResolvidos
+                    )
+                );
+
+
                 console.log(
                     "Voto registrado:",
                     botao.innerText
@@ -645,3 +740,129 @@ botoesVoto.forEach(
 
     }
 );
+
+
+// ========================================
+// EXCLUIR PROBLEMA
+// ========================================
+
+const botaoExcluir =
+    document.querySelector(
+        ".excluir-problema"
+    );
+
+
+if (botaoExcluir) {
+
+    botaoExcluir.addEventListener(
+        "click",
+        function() {
+
+            const confirmar =
+                confirm(
+                    "Tem certeza que deseja excluir este problema?"
+                );
+
+
+            if (!confirmar) {
+
+                return;
+
+            }
+
+
+            const idParaExcluir =
+                problemaSelecionado.id;
+
+
+            // ================================
+            // REMOVE DOS PROBLEMAS SALVOS
+            // (caso seja um problema novo,
+            // criado pelo próprio usuário)
+            // ================================
+
+            let problemasSalvosAtualizados =
+                JSON.parse(
+                    localStorage.getItem("problemas")
+                ) || [];
+
+
+            problemasSalvosAtualizados =
+                problemasSalvosAtualizados.filter(
+                    function(problema) {
+
+                        return problema.id !==
+                               idParaExcluir;
+
+                    }
+                );
+
+
+            localStorage.setItem(
+                "problemas",
+                JSON.stringify(
+                    problemasSalvosAtualizados
+                )
+            );
+
+
+            // ================================
+            // MARCA O ID COMO EXCLUÍDO
+            // (necessário também para os
+            // 5 problemas fixos, que não
+            // podem ser removidos do código)
+            // ================================
+
+            let idsExcluidos =
+                JSON.parse(
+                    localStorage.getItem("problemasExcluidos")
+                ) || [];
+
+
+            if (
+                !idsExcluidos.includes(
+                    idParaExcluir
+                )
+            ) {
+
+                idsExcluidos.push(
+                    idParaExcluir
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "problemasExcluidos",
+                JSON.stringify(
+                    idsExcluidos
+                )
+            );
+
+
+            console.log(
+                "Problema excluído:",
+                idParaExcluir
+            );
+
+
+            // ================================
+            // REDIRECIONA DE VOLTA
+            // ================================
+
+            if (origem === "mapa") {
+
+                window.location.href =
+                    "index.html";
+
+            } else {
+
+                window.location.href =
+                    "notificacoes.html";
+
+            }
+
+        }
+    );
+
+}
