@@ -1,147 +1,177 @@
 # WebMobileProject
 
-Meu Bairro — Descrição das Funcionalidades do Protótipo Mobile
+## Meu Bairro — Descrição das Funcionalidades do Protótipo Mobile
 
-O Meu Bairro é um protótipo de aplicativo mobile desenvolvido com o objetivo de permitir que moradores registrem, visualizem e acompanhem problemas encontrados em sua comunidade. A proposta está relacionada ao ODS 11 — Cidades e Comunidades Sustentáveis, buscando incentivar a participação dos moradores na identificação de problemas do bairro.
+O **Meu Bairro** é um protótipo de aplicativo mobile desenvolvido com o objetivo de permitir que moradores registrem, visualizem e acompanhem problemas encontrados em sua comunidade.
 
-O protótipo é composto por cinco telas principais, organizadas de forma simples e intuitiva para facilitar a utilização pela comunidade.
+A proposta está relacionada ao **ODS 11 — Cidades e Comunidades Sustentáveis**, buscando incentivar a participação dos moradores na identificação de problemas do bairro.
 
-1. Tela — Mapa
+O protótipo utiliza **HTML5, CSS3 e JavaScript** e possui uma estrutura composta por telas integradas, nas quais o usuário pode realizar ações, visualizar informações e acompanhar os problemas registrados.
 
-A tela de Mapa é a página principal do aplicativo e apresenta uma representação visual do bairro.
+O projeto foi desenvolvido de forma simples, priorizando uma interface organizada, intuitiva e adequada à proposta acadêmica.
 
-O mapa possui ruas e quadras representadas graficamente e apresenta cinco marcadores correspondentes aos problemas registrados pelos moradores. Cada marcador possui uma cor e um ícone de acordo com a categoria do problema, facilitando sua identificação.
+---
+
+# 1. Tela — Login
+
+A tela de **Login** é a porta de entrada do aplicativo.
+
+Nessa tela, o usuário informa seus dados para iniciar uma sessão simulada no protótipo.
+
+O formulário possui os seguintes campos:
+
+* Nome;
+* E-mail;
+* Bairro.
+
+O botão **“Entrar”** permite iniciar a sessão após o preenchimento dos campos obrigatórios.
+
+Caso algum campo não seja preenchido, o sistema apresenta uma mensagem indicando a informação que deve ser preenchida.
+
+Após o preenchimento correto, os dados do usuário são armazenados no navegador por meio do `localStorage`.
+
+São armazenadas as seguintes informações:
+
+* `usuarioLogado`;
+* `nomeUsuario`;
+* `emailUsuario`;
+* `bairroUsuario`.
+
+Após o login, o usuário é direcionado para a tela principal do aplicativo.
+
+Essa funcionalidade permite simular uma sessão de usuário sem a necessidade de um sistema real de autenticação ou banco de dados.
+
+---
+
+# 2. Tela — Mapa
+
+A tela de **Mapa** é a página principal do aplicativo e apresenta uma representação visual do bairro.
+
+O mapa possui ruas e quadras representadas graficamente e apresenta marcadores correspondentes aos problemas registrados pelos moradores.
+
+Cada marcador possui uma cor e um ícone de acordo com a categoria do problema, facilitando sua identificação.
 
 Ao lado do mapa existe uma legenda com as categorias disponíveis. Dessa forma, o usuário consegue identificar rapidamente quais tipos de problemas estão presentes na região.
 
-Ao selecionar um marcador no mapa, é apresentado um cartão com as informações básicas da ocorrência, como:
+A tela também possui um filtro por categoria, permitindo selecionar tipos específicos de problemas.
 
-* Tipo do problema;
-* Endereço;
-* Data do registro;
-* Descrição;
-* Botão “Ver Detalhes”.
+Ao selecionar um marcador no mapa, o usuário pode acessar a tela de detalhes da ocorrência.
 
-O cabeçalho da tela apresenta o nome do aplicativo, “Meu Bairro”, além de um botão que permite utilizar a localização do usuário.
+Os problemas criados pelo usuário também podem ser adicionados ao mapa de forma dinâmica.
 
 Essa tela funciona como o principal ponto de visualização das ocorrências cadastradas pela comunidade.
 
-2. Tela — Notificações
+---
 
-A tela de Notificações apresenta uma lista dos problemas registrados pelos moradores.
+# 3. Tela — Notificações
 
-O usuário consegue visualizar as cinco ocorrências cadastradas no protótipo. Cada ocorrência é apresentada em um cartão contendo:
+A tela de **Notificações** apresenta uma lista dos problemas registrados pelos moradores.
+
+As ocorrências são apresentadas em cartões contendo:
 
 * Ícone correspondente à categoria;
 * Tipo do problema;
 * Morador responsável pelo registro;
 * Localização;
 * Data;
+* Descrição;
+* Situação da ocorrência.
+
+A tela possui um indicador de novas notificações, como **“2 novos”**, quando existem problemas ainda não visualizados.
+
+As notificações não visualizadas possuem um ponto colorido para diferenciá-las das notificações já visualizadas.
+
+Quando o usuário seleciona uma ocorrência, ela é marcada como visualizada e o contador de novas notificações é atualizado.
+
+A visualização dos problemas é armazenada no `localStorage`, permitindo manter o estado mesmo após a atualização da página.
+
+Também foram implementadas funcionalidades de:
+
+* Busca por texto;
+* Filtro por categoria;
+* Identificação de problemas resolvidos;
+* Exclusão de problemas;
+* Atualização do contador de novas notificações.
+
+## Controle de notificações
+
+A tela de Configurações possui uma opção para ativar ou desativar os avisos de notificações.
+
+Quando as notificações estão ativadas:
+
+* O indicador de novas notificações é exibido;
+* Os pontos das notificações não visualizadas são exibidos.
+
+Quando as notificações estão desativadas:
+
+* O indicador de novas notificações é ocultado;
+* Os pontos de novas notificações são ocultados;
+* Os problemas continuam disponíveis na lista.
+
+A preferência escolhida pelo usuário é armazenada no `localStorage`.
+
+Dessa forma, a opção de notificações possui uma função real dentro do aplicativo e está integrada à tela de Notificações.
+
+---
+
+# 4. Tela — Registrar Problema
+
+A tela de **Registrar Problema** permite que o próprio morador cadastre uma nova ocorrência.
+
+Primeiramente, o usuário deve selecionar uma categoria de problema.
+
+As categorias são apresentadas em um grid de opções e possuem um feedback visual quando selecionadas, permitindo que o usuário saiba qual categoria escolheu.
+
+Em seguida, o usuário informa a localização do problema.
+
+Existe também a opção de utilizar a localização apresentada pelo protótipo por meio do botão de localização, facilitando o preenchimento do endereço.
+
+O usuário pode adicionar uma fotografia do problema por meio da área de upload de imagem.
+
+Após selecionar uma fotografia, o sistema apresenta uma pré-visualização da imagem na própria tela.
+
+Depois, o usuário pode adicionar uma descrição utilizando um campo de texto.
+
+O campo possui um contador de caracteres, permitindo acompanhar a quantidade de caracteres digitados.
+
+Antes da publicação, o sistema valida:
+
+* Categoria;
+* Localização;
 * Descrição.
 
-A tela também possui um indicador “2 novos”, mostrando ao usuário que existem duas notificações recentes.
+Caso alguma informação obrigatória não seja preenchida, o sistema apresenta uma mensagem solicitando o preenchimento.
 
-As notificações que ainda não foram visualizadas possuem um ponto colorido para diferenciá-las das notificações já lidas.
+Após o preenchimento das informações necessárias, o problema é salvo no `localStorage`.
 
-Dessa forma, o usuário consegue acompanhar as novas ocorrências registradas na comunidade sem precisar consultar individualmente o mapa.
+O registro armazena informações como:
 
-3. Tela — Registrar Problema
-
-A tela de Registrar Problema permite que o próprio morador cadastre uma nova ocorrência.
-
-Primeiramente, o usuário deve selecionar uma categoria de problema. As categorias são apresentadas em um grid de opções e possuem um feedback visual quando selecionadas, permitindo que o usuário saiba qual categoria escolheu.
-
-Em seguida, o usuário informa a localização do problema. Existe também a opção de utilizar a localização atual do dispositivo, facilitando o preenchimento do endereço.
-
-O usuário pode adicionar uma fotografia do problema por meio da área de upload de imagem. A fotografia permite representar visualmente a situação registrada.
-
-Depois, o usuário pode adicionar uma descrição utilizando um campo de texto. O campo possui um contador de caracteres para auxiliar no preenchimento.
-
-Após preencher as informações necessárias, o usuário utiliza o botão “Publicar Problema”.
-
-O botão possui diferentes estados de acordo com o preenchimento do formulário. Quando as informações necessárias ainda não foram preenchidas, o botão permanece inativo. Após o preenchimento, ele passa a ficar ativo.
-
-Ao publicar o problema, o aplicativo apresenta uma tela de sucesso, informando que o registro foi realizado.
-
-Essa funcionalidade é fundamental para o caráter comunitário do projeto, pois permite que os próprios moradores contribuam para o registro e acompanhamento dos problemas do bairro.
-
-4. Tela — Configurações
-
-A tela de Configurações permite que o usuário visualize suas informações e altere algumas preferências do aplicativo.
-
-Na parte superior é apresentado um cartão de perfil contendo:
-
-* Avatar do usuário;
-* Nome;
-* E-mail;
-* Bairro.
-
-A tela também possui um controle para ativar ou desativar as notificações do aplicativo. O toggle apresenta um feedback visual de acordo com o estado selecionado pelo usuário.
-
-Além disso, são disponibilizadas opções de:
-
-* Privacidade;
-* Ajuda;
-* Sobre o aplicativo.
-
-Na parte inferior existe o botão “Sair da Conta”, destacado em vermelho para indicar uma ação relacionada ao encerramento da sessão.
-
-Essa tela concentra as principais configurações do usuário em um único local, mantendo a navegação simples e organizada.
-
-5. Tela — Detalhes do Problema
-
-A tela de Detalhes do Problema apresenta todas as informações referentes a uma ocorrência específica.
-
-Essa tela pode ser acessada a partir do mapa ou da lista de notificações, quando o usuário seleciona um problema.
-
-Na parte superior é apresentada uma fotografia da ocorrência, acompanhada de um gradiente e de um indicador visual da categoria do problema. Também existe um botão de voltar sobre a imagem, permitindo retornar à tela anterior.
-
-Abaixo da imagem são apresentadas as informações completas da ocorrência:
-
+* ID;
+* Título;
+* Categoria;
 * Endereço;
 * Data;
-* Hora;
-* Morador responsável pelo registro;
-* Descrição do problema.
+* Horário;
+* Morador;
+* Descrição;
+* Fotografia.
 
-A tela também apresenta um mini mapa com um marcador indicando a localização exata da ocorrência.
+## Usuário responsável pelo problema
 
-O botão “Ver no Mapa” permite retornar à visualização do problema no mapa principal.
+O nome do morador não é mais fixo.
 
-Por fim, existe uma funcionalidade de participação da comunidade por meio da pergunta sobre a situação atual do problema. O usuário pode escolher entre as opções “Ainda existe” e “Resolvido”. Após a seleção, a interface apresenta um feedback visual indicando a opção escolhida.
+O sistema utiliza o nome do usuário que está atualmente logado.
 
-Essa funcionalidade permite que os próprios moradores contribuam para manter as informações das ocorrências atualizadas.
+Dessa forma, quando um usuário realiza o login e registra um problema, a ocorrência recebe automaticamente o nome desse usuário como responsável pelo registro.
 
-Fluxo de utilização
+Por exemplo:
 
-O funcionamento geral do aplicativo pode ser representado pelo seguinte fluxo:
+```text
+Nome informado no login:
+Maria Souza
 
-Mapa → selecionar problema → Ver Detalhes
+Novo problema:
+Buraco na rua
 
-ou
-
-Notificações → selecionar ocorrência → Ver Detalhes
-
-Para registrar uma nova ocorrência:
-
-Registrar Problema → selecionar categoria → informar localização → adicionar foto → escrever descrição → Publicar Problema → confirmação de sucesso
-
-O usuário também pode acessar:
-
-Configurações → perfil e preferências do aplicativo
-
-Dessa maneira, o protótipo apresenta um fluxo simples, no qual o morador pode visualizar problemas, receber informações sobre novas ocorrências, registrar novos problemas e acompanhar detalhes das situações identificadas pela comunidade.
-
-Interações do protótipo
-
-O protótipo também apresenta elementos interativos que demonstram como o sistema poderá funcionar durante a implementação em HTML5, CSS3 e JavaScript. Entre eles estão a seleção de categorias, utilização da localização, publicação de problemas, mudança do estado das notificações, ativação e desativação das notificações e votação sobre a situação de um problema.
-
-Essas interações contribuem para o caráter dinâmico do projeto, requisito previsto para o desenvolvimento da aplicação. A disciplina estabelece que o projeto deve ser desenvolvido utilizando HTML5, CSS3 e JavaScript e possuir, no mínimo, duas interações com JavaScript.
-
-Organização dos arquivos
-
-O projeto é composto por cinco arquivos HTML, um para cada tela, e seis arquivos CSS: um arquivo style.css com as regras compartilhadas por todas as telas e um arquivo específico para cada uma delas. Cada arquivo HTML carrega os dois, nessa ordem.
-
-O processo de separação do CSS, os critérios adotados e as padronizações realizadas estão descritos no arquivo CSS.md.
-
-O protótipo inicial também fará parte da documentação do projeto, conforme solicitado no enunciado, que prevê a inclusão de imagens do protótipo e uma explicação do processo de ideação no README.md.
+Morador:
+Maria Souza
