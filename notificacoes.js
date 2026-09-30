@@ -3,40 +3,111 @@
 // ========================================
 
 
-// Problemas excluídos pelo usuário
+// ========================================
+// PREFERÊNCIA DE NOTIFICAÇÕES
+// ========================================
+
+// Verifica se as notificações estão ativadas
+let notificacoesAtivas =
+    localStorage.getItem("notificacoesAtivas");
+
+
+// Caso ainda não exista uma preferência,
+// as notificações começam ativadas
+if (notificacoesAtivas === null) {
+
+    notificacoesAtivas = "true";
+
+}
+
+
+// Converte o texto salvo para verdadeiro ou falso
+notificacoesAtivas =
+    notificacoesAtivas === "true";
+
+
+
+// ========================================
+// PROBLEMAS EXCLUÍDOS PELO USUÁRIO
+// ========================================
 
 let problemasExcluidos =
-    JSON.parse(localStorage.getItem("problemasExcluidos")) || [];
+    JSON.parse(
+        localStorage.getItem("problemasExcluidos")
+    ) || [];
 
 
-// Problemas marcados como resolvidos
+
+// ========================================
+// PROBLEMAS MARCADOS COMO RESOLVIDOS
+// ========================================
 
 let problemasResolvidos =
-    JSON.parse(localStorage.getItem("problemasResolvidos")) || [];
+    JSON.parse(
+        localStorage.getItem("problemasResolvidos")
+    ) || [];
 
+
+
+// ========================================
+// PROBLEMAS CRIADOS PELO USUÁRIO
+// ========================================
 
 // Pega os problemas criados pelo usuário,
 // já removendo os que foram excluídos
 
 let problemasSalvos =
-    (JSON.parse(localStorage.getItem("problemas")) || [])
+    (JSON.parse(
+        localStorage.getItem("problemas")
+    ) || [])
         .filter(function(problema) {
 
-            return !problemasExcluidos.includes(problema.id);
+            return !problemasExcluidos.includes(
+                problema.id
+            );
 
         });
 
 
-// Elementos da página
+
+// ========================================
+// USUÁRIO LOGADO
+// ========================================
+
+// Pega o nome do usuário salvo no login
+let nomeUsuarioLogado =
+    localStorage.getItem("nomeUsuario");
+
+
+// Caso não exista um nome salvo,
+// utiliza o nome padrão do protótipo
+if (
+    nomeUsuarioLogado === null ||
+    nomeUsuarioLogado.trim() === ""
+) {
+
+    nomeUsuarioLogado =
+        "João da Silva";
+
+}
+
+
+
+// ========================================
+// ELEMENTOS DA PÁGINA
+// ========================================
 
 const listaProblemas =
     document.querySelector(".problems-list");
 
+
 const badge =
     document.querySelector(".new-badge");
 
+
 const footerInfo =
     document.querySelector(".footer-info");
+
 
 
 // ========================================
@@ -46,27 +117,44 @@ const footerInfo =
 function obterIcone(categoria) {
 
     if (categoria === "Lixo acumulado") {
+
         return "🗑️";
+
     }
+
 
     if (categoria === "Iluminação") {
+
         return "💡";
+
     }
+
 
     if (categoria === "Buraco na rua") {
+
         return "🕳️";
+
     }
+
 
     if (categoria === "Calçada danificada") {
+
         return "🚧";
+
     }
+
 
     if (categoria === "Vazamento") {
+
         return "💧";
+
     }
 
+
     return "⚠️";
+
 }
+
 
 
 // ========================================
@@ -76,27 +164,44 @@ function obterIcone(categoria) {
 function obterClasseIcone(categoria) {
 
     if (categoria === "Lixo acumulado") {
+
         return "red";
+
     }
+
 
     if (categoria === "Iluminação") {
+
         return "yellow";
+
     }
+
 
     if (categoria === "Buraco na rua") {
+
         return "orange";
+
     }
+
 
     if (categoria === "Calçada danificada") {
+
         return "purple";
+
     }
+
 
     if (categoria === "Vazamento") {
+
         return "blue";
+
     }
 
+
     return "orange";
+
 }
+
 
 
 // ========================================
@@ -106,27 +211,44 @@ function obterClasseIcone(categoria) {
 function obterNomeCategoria(categoria) {
 
     if (categoria === "Lixo acumulado") {
+
         return "Limpeza";
+
     }
+
 
     if (categoria === "Iluminação") {
+
         return "Iluminação";
+
     }
+
 
     if (categoria === "Buraco na rua") {
+
         return "Vias públicas";
+
     }
+
 
     if (categoria === "Calçada danificada") {
+
         return "Acessibilidade";
+
     }
+
 
     if (categoria === "Vazamento") {
+
         return "Saneamento";
+
     }
 
+
     return "Outros";
+
 }
+
 
 
 // ========================================
@@ -136,40 +258,56 @@ function obterNomeCategoria(categoria) {
 // Pega os 5 problemas que já estão no HTML
 
 const problemasFixos =
-    document.querySelectorAll(".problem-link");
+    document.querySelectorAll(
+        ".problem-link"
+    );
 
+
+
+// ========================================
+// CONFIGURA OS PROBLEMAS FIXOS
+// ========================================
 
 // Cada problema antigo recebe seu ID fixo
-// (ou é removido do DOM, se tiver sido excluído)
+// ou é removido do DOM, se tiver sido excluído
 
-problemasFixos.forEach(function(link, index) {
+problemasFixos.forEach(
+    function(link, index) {
 
-    const idProblema =
-        index + 1;
+        const idProblema =
+            index + 1;
 
 
-    if (problemasExcluidos.includes(idProblema)) {
+        if (
+            problemasExcluidos.includes(
+                idProblema
+            )
+        ) {
 
-        link.remove();
+            link.remove();
 
-        return;
+            return;
+
+        }
+
+
+        link.href =
+            "detalhes.html?problemaId=" +
+            idProblema;
+
+
+        // Grava o ID diretamente no card,
+        // para que ele possa ser lido depois
+        // sem depender da posição no DOM
+
+        link.querySelector(
+            ".problem"
+        ).dataset.id =
+            idProblema;
 
     }
+);
 
-
-    link.href =
-        "detalhes.html?problemaId=" +
-        idProblema;
-
-
-    // Grava o ID diretamente no card,
-    // para que ele possa ser lido depois
-    // sem depender da posição no DOM
-
-    link.querySelector(".problem").dataset.id =
-        idProblema;
-
-});
 
 
 // ========================================
@@ -179,9 +317,8 @@ problemasFixos.forEach(function(link, index) {
 // Como cada card agora guarda seu próprio
 // ID em um atributo data-id, tanto os
 // problemas fixos quanto os criados pelo
-// usuário podem ser identificados da
-// mesma forma, sem depender da posição
-// dele na lista.
+// usuário podem ser identificados da mesma
+// forma, sem depender da posição dele na lista.
 
 function obterIdProblema(problema) {
 
@@ -199,6 +336,7 @@ function obterIdProblema(problema) {
     return Number(id);
 
 }
+
 
 
 // ========================================
@@ -239,6 +377,7 @@ function criarNotificacao(problema) {
         problema.id;
 
 
+
     // ====================================
     // ÍCONE
     // ====================================
@@ -261,6 +400,7 @@ function criarNotificacao(problema) {
         );
 
 
+
     // ====================================
     // CONTEÚDO
     // ====================================
@@ -274,6 +414,7 @@ function criarNotificacao(problema) {
     );
 
 
+
     // ====================================
     // TÍTULO
     // ====================================
@@ -284,6 +425,7 @@ function criarNotificacao(problema) {
 
     titulo.innerText =
         problema.titulo;
+
 
 
     // ====================================
@@ -303,6 +445,7 @@ function criarNotificacao(problema) {
         obterNomeCategoria(
             problema.categoria
         );
+
 
 
     // ====================================
@@ -328,6 +471,7 @@ function criarNotificacao(problema) {
     );
 
 
+
     // ====================================
     // INFORMAÇÕES
     // ====================================
@@ -347,7 +491,10 @@ function criarNotificacao(problema) {
 
     morador.innerText =
         "👤 " +
-        problema.morador;
+        (
+            problema.morador ||
+            nomeUsuarioLogado
+        );
 
 
     const endereco =
@@ -369,6 +516,7 @@ function criarNotificacao(problema) {
     );
 
 
+
     // ====================================
     // DESCRIÇÃO
     // ====================================
@@ -384,6 +532,7 @@ function criarNotificacao(problema) {
 
     descricao.innerText =
         problema.descricao;
+
 
 
     // ====================================
@@ -402,6 +551,7 @@ function criarNotificacao(problema) {
 
     status.innerText =
         "Novo";
+
 
 
     // ====================================
@@ -428,6 +578,7 @@ function criarNotificacao(problema) {
     );
 
 
+
     // ====================================
     // DATA
     // ====================================
@@ -444,6 +595,7 @@ function criarNotificacao(problema) {
     data.innerText =
         "📅 " +
         problema.data;
+
 
 
     // ====================================
@@ -470,6 +622,7 @@ function criarNotificacao(problema) {
     );
 
 
+
     // ====================================
     // ADICIONA NA LISTA
     // ====================================
@@ -479,6 +632,7 @@ function criarNotificacao(problema) {
     );
 
 }
+
 
 
 // ========================================
@@ -496,6 +650,7 @@ problemasSalvos.forEach(
 );
 
 
+
 // ========================================
 // TODOS OS PROBLEMAS
 // ========================================
@@ -506,6 +661,11 @@ const problemas =
     );
 
 
+
+// ========================================
+// PROBLEMAS VISUALIZADOS
+// ========================================
+
 // Pega os problemas que já foram vistos
 
 let problemasVisualizados =
@@ -514,6 +674,7 @@ let problemasVisualizados =
             "problemasVisualizados"
         )
     ) || [];
+
 
 
 // ========================================
@@ -547,6 +708,7 @@ problemas.forEach(
 
     }
 );
+
 
 
 // ========================================
@@ -583,6 +745,7 @@ problemas.forEach(
 );
 
 
+
 // ========================================
 // MARCAR COMO RESOLVIDO
 // ========================================
@@ -617,6 +780,7 @@ function marcarComoResolvido(
 }
 
 
+
 // ========================================
 // CLIQUE NAS NOTIFICAÇÕES
 // ========================================
@@ -644,6 +808,7 @@ problemas.forEach(
                 }
 
 
+
                 // =================================
                 // MARCA COMO VISUALIZADO
                 // =================================
@@ -651,6 +816,7 @@ problemas.forEach(
                 marcarComoVisualizado(
                     problema
                 );
+
 
 
                 // =================================
@@ -663,6 +829,7 @@ problemas.forEach(
                             "problemasVisualizados"
                         )
                     ) || [];
+
 
 
                 // =================================
@@ -682,6 +849,7 @@ problemas.forEach(
                 }
 
 
+
                 // =================================
                 // SALVA NO LOCALSTORAGE
                 // =================================
@@ -692,6 +860,7 @@ problemas.forEach(
                         visualizados
                     )
                 );
+
 
 
                 // =================================
@@ -705,6 +874,7 @@ problemas.forEach(
 
     }
 );
+
 
 
 // ========================================
@@ -744,7 +914,9 @@ function marcarComoVisualizado(
 
     if (
         status &&
-        !status.classList.contains("resolved")
+        !status.classList.contains(
+            "resolved"
+        )
     ) {
 
         status.innerText =
@@ -760,6 +932,7 @@ function marcarComoVisualizado(
 }
 
 
+
 // ========================================
 // ATUALIZA CONTADOR
 // ========================================
@@ -772,30 +945,57 @@ function atualizarContador() {
         ).length;
 
 
-    if (quantidade > 0) {
 
-        badge.innerText =
-            quantidade +
-            " novos";
+    // ====================================
+    // NOTIFICAÇÕES ATIVADAS
+    // ====================================
 
+    if (notificacoesAtivas) {
 
-        badge.style.display =
-            "inline-block";
+        if (quantidade > 0) {
 
-
-        badge.style.background =
-            "#16a34a";
-
-    } else {
-
-        badge.innerText =
-            "Nenhum novo";
+            badge.innerText =
+                quantidade +
+                " novos";
 
 
-        badge.style.background =
-            "#9ca3af";
+            badge.style.display =
+                "inline-block";
+
+
+            badge.style.background =
+                "#16a34a";
+
+        } else {
+
+            badge.innerText =
+                "Nenhum novo";
+
+
+            badge.style.display =
+                "inline-block";
+
+
+            badge.style.background =
+                "#9ca3af";
+
+        }
 
     }
+
+
+
+    // ====================================
+    // NOTIFICAÇÕES DESATIVADAS
+    // ====================================
+
+    else {
+
+        badge.style.display =
+            "none";
+
+    }
+
 
 
     // ====================================
@@ -814,11 +1014,49 @@ function atualizarContador() {
 }
 
 
+
+// ========================================
+// CONTROLA OS AVISOS VISUAIS
+// ========================================
+
+function atualizarAvisosNotificacao() {
+
+    const pontos =
+        document.querySelectorAll(
+            ".notification-dot"
+        );
+
+
+    pontos.forEach(
+        function(ponto) {
+
+            if (notificacoesAtivas) {
+
+                ponto.style.display =
+                    "inline-block";
+
+            } else {
+
+                ponto.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+
 // ========================================
 // ATUALIZA AO ABRIR
 // ========================================
 
 atualizarContador();
+
+atualizarAvisosNotificacao();
+
 
 
 // ========================================
@@ -826,17 +1064,24 @@ atualizarContador();
 // ========================================
 
 const campoBusca =
-    document.querySelector("#busca-input");
+    document.querySelector(
+        "#busca-input"
+    );
 
 
 const seletorCategoria =
-    document.querySelector("#filtro-categoria");
+    document.querySelector(
+        "#filtro-categoria"
+    );
+
 
 
 function filtrarProblemas() {
 
     const termoBusca =
-        campoBusca.value.trim().toLowerCase();
+        campoBusca.value
+            .trim()
+            .toLowerCase();
 
 
     const categoriaEscolhida =
@@ -844,54 +1089,80 @@ function filtrarProblemas() {
 
 
     const cards =
-        document.querySelectorAll(".problem-link");
+        document.querySelectorAll(
+            ".problem-link"
+        );
 
 
     let visiveis = 0;
 
 
-    cards.forEach(function(card) {
+    cards.forEach(
+        function(card) {
 
-        const titulo =
-            card.querySelector("h3").innerText.toLowerCase();
-
-
-        const categoria =
-            card.querySelector(".category").innerText.trim();
-
-
-        const endereco =
-            card.querySelector(".problem-info").innerText.toLowerCase();
+            const titulo =
+                card.querySelector(
+                    "h3"
+                ).innerText.toLowerCase();
 
 
-        const descricao =
-            card.querySelector(".description").innerText.toLowerCase();
+            const categoria =
+                card.querySelector(
+                    ".category"
+                ).innerText.trim();
 
 
-        const combinaBusca =
-            titulo.includes(termoBusca) ||
-            endereco.includes(termoBusca) ||
-            descricao.includes(termoBusca);
+            const endereco =
+                card.querySelector(
+                    ".problem-info"
+                ).innerText.toLowerCase();
 
 
-        const combinaCategoria =
-            categoriaEscolhida === "todas" ||
-            categoria === categoriaEscolhida;
+            const descricao =
+                card.querySelector(
+                    ".description"
+                ).innerText.toLowerCase();
 
 
-        if (combinaBusca && combinaCategoria) {
+            const combinaBusca =
+                titulo.includes(
+                    termoBusca
+                ) ||
+                endereco.includes(
+                    termoBusca
+                ) ||
+                descricao.includes(
+                    termoBusca
+                );
 
-            card.style.display = "block";
 
-            visiveis++;
+            const combinaCategoria =
+                categoriaEscolhida === "todas" ||
+                categoria ===
+                categoriaEscolhida;
 
-        } else {
 
-            card.style.display = "none";
+
+            if (
+                combinaBusca &&
+                combinaCategoria
+            ) {
+
+                card.style.display =
+                    "block";
+
+                visiveis++;
+
+            } else {
+
+                card.style.display =
+                    "none";
+
+            }
 
         }
+    );
 
-    });
 
 
     // ====================================
@@ -912,6 +1183,11 @@ function filtrarProblemas() {
 }
 
 
+
+// ========================================
+// CAMPO DE BUSCA
+// ========================================
+
 if (campoBusca) {
 
     campoBusca.addEventListener(
@@ -921,6 +1197,11 @@ if (campoBusca) {
 
 }
 
+
+
+// ========================================
+// FILTRO DE CATEGORIA
+// ========================================
 
 if (seletorCategoria) {
 
