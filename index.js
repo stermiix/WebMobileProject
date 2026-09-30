@@ -1,308 +1,483 @@
-/* =========================
-   CONTEÚDO
-========================== */
+// ========================================
+// MAPA DO BAIRRO
+// ========================================
 
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 35px 20px 50px;
-}
 
-.page-header {
-    margin-bottom: 28px;
-}
+// Pega o mapa
 
-.page-header h1 {
-    font-size: 28px;
-    margin-bottom: 8px;
-}
+const mapa =
+    document.querySelector(".mapa");
 
-.subtitle {
-    color: #6b7280;
-    font-size: 14px;
-    line-height: 1.5;
-}
 
-/* =========================
-   BUSCA E FILTROS
-========================== */
+// Problemas excluídos pelo usuário
 
-.filtros {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 22px;
-    flex-wrap: wrap;
-}
+let problemasExcluidos =
+    JSON.parse(
+        localStorage.getItem("problemasExcluidos")
+    ) || [];
 
-#busca-input {
-    flex: 1;
-    min-width: 220px;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    padding: 11px 14px;
-    font-size: 14px;
-    outline: none;
-    background: white;
-}
 
-#busca-input:focus {
-    border-color: #2563eb;
-}
+// ========================================
+// MARCADORES FIXOS
+// ========================================
 
-#filtro-categoria {
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    padding: 11px 14px;
-    font-size: 14px;
-    background: white;
-    color: #374151;
-    cursor: pointer;
-}
 
-/* =========================
-   CABEÇALHO DOS PROBLEMAS
-========================== */
+// Pega os cinco marcadores que já existem
+// no HTML
 
-.problems-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
+const marcadores =
+    document.querySelectorAll(
+        ".mapa > a"
+    );
 
-.problems-header h2 {
-    font-size: 18px;
-}
 
-.new-badge {
-    background: #16a34a;
-    color: white;
-    padding: 7px 13px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
-}
+// Cada marcador fixo recebe seu
+// respectivo problema
+// (ou é removido, se tiver sido excluído)
 
-/* =========================
-   LISTA DE PROBLEMAS
-========================== */
+marcadores.forEach(
+    function(marcador, index) {
 
-.problems-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
+        const idProblema =
+            index + 1;
 
-/*
-   O LINK ENVOLVE O CARD.
-   Assim podemos clicar no problema
-   e abrir detalhes.html.
-*/
 
-.problem-link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
+        if (problemasExcluidos.includes(idProblema)) {
 
-.problem {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 58px 1fr auto;
-    gap: 17px;
-    align-items: start;
+            marcador.remove();
 
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e5e7eb;
-    transition: 0.2s;
-}
+            return;
 
-/* EFEITO AO PASSAR O MOUSE */
+        }
 
-.problem-link:hover .problem {
-    transform: translateY(-2px);
 
-    box-shadow:
-        0 5px 14px rgba(0, 0, 0, 0.10);
-    border-color: #bfdbfe;
-}
+        marcador.href =
+            "detalhes.html?problemaId=" +
+            idProblema +
+            "&origem=mapa";
 
-/* PROBLEMA NOVO */
 
-.problem.unread {
-    border-left: 4px solid #16a34a;
-    background: #fcfffc;
-}
+        console.log(
+            "Marcador fixo configurado:",
+            idProblema
+        );
 
-/* =========================
-   ÍCONES
-========================== */
+    }
+);
 
-.problem-icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    color: white;
-}
 
-.red {
-    background: #ef4444;
-}
+// ========================================
+// PROBLEMAS NOVOS
+// ========================================
 
-.yellow {
-    background: #f59e0b;
-}
 
-.orange {
-    background: #f97316;
-}
+// Recupera os problemas cadastrados
+// pelo usuário, já removendo os
+// que foram excluídos
 
-.purple {
-    background: #8b5cf6;
-}
+let problemasSalvos =
+    (JSON.parse(
+        localStorage.getItem("problemas")
+    ) || []).filter(
+        function(problema) {
 
-.blue {
-    background: #2563eb;
-}
+            return !problemasExcluidos.includes(
+                problema.id
+            );
 
-/* =========================
-   INFORMAÇÕES
-========================== */
+        }
+    );
 
-.problem-content h3 {
-    font-size: 17px;
-    margin-bottom: 7px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-}
 
-.category {
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 10px;
-    background: #eef2ff;
-    color: #4f46e5;
-    font-weight: bold;
-}
+// ========================================
+// POSIÇÕES DOS NOVOS MARCADORES
+// ========================================
 
-.notification-dot {
-    width: 9px;
-    height: 9px;
-    background: #16a34a;
-    border-radius: 50%;
-    display: inline-block;
-}
 
-.problem-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 9px;
-    color: #6b7280;
-    font-size: 12px;
-}
+// Como o mapa é uma ilustração,
+// vamos colocar os novos problemas
+// em diferentes quadras.
 
-.description {
-    color: #4b5563;
-    font-size: 13px;
-    line-height: 1.5;
-    max-width: 700px;
-}
+const posicoesNovosMarcadores = [
 
-/* =========================
-   DATA
-========================== */
+    {
+        left: "350px",
+        top: "80px"
+    },
 
-.problem-date {
-    color: #6b7280;
-    font-size: 12px;
-    white-space: nowrap;
-}
+    {
+        left: "595px",
+        top: "250px"
+    },
 
-/* =========================
-   STATUS
-========================== */
+    {
+        left: "835px",
+        top: "80px"
+    },
 
-.status {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 11px;
-    padding: 5px 9px;
-    border-radius: 10px;
-    background: #f3f4f6;
-    color: #6b7280;
-}
+    {
+        left: "110px",
+        top: "250px"
+    },
 
-.status.new {
-    background: #dcfce7;
-    color: #15803d;
-    font-weight: bold;
-}
+    {
+        left: "595px",
+        top: "430px"
+    },
 
-.status.resolved {
-    background: #dbeafe;
-    color: #1e40af;
-    font-weight: bold;
-}
+    {
+        left: "835px",
+        top: "430px"
+    },
 
-/* =========================
-   RODAPÉ
-========================== */
-
-.footer-info {
-    text-align: center;
-    margin-top: 25px;
-    color: #9ca3af;
-    font-size: 12px;
-}
-
-/* =========================
-   RESPONSIVIDADE
-========================== */
-
-@media (max-width: 750px) {
-    .problem {
-        grid-template-columns: 50px 1fr;
-        gap: 14px;
+    {
+        left: "110px",
+        top: "430px"
     }
 
-    .problem-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 21px;
+];
+
+
+// ========================================
+// FUNÇÃO - ÍCONE
+// ========================================
+
+function obterIcone(categoria) {
+
+    if (
+        categoria === "Lixo acumulado"
+    ) {
+
+        return "🗑️";
+
     }
 
-    .problem-date {
-        grid-column: 2;
-        margin-top: -5px;
+
+    if (
+        categoria === "Iluminação"
+    ) {
+
+        return "💡";
+
     }
+
+
+    if (
+        categoria === "Buraco na rua"
+    ) {
+
+        return "🕳️";
+
+    }
+
+
+    if (
+        categoria === "Calçada danificada"
+    ) {
+
+        return "🚧";
+
+    }
+
+
+    if (
+        categoria === "Vazamento"
+    ) {
+
+        return "💧";
+
+    }
+
+
+    return "⚠️";
+
 }
 
-@media (max-width: 500px) {
-    .container {
-        padding: 25px 15px 40px;
+
+// ========================================
+// FUNÇÃO - CLASSE DO MARCADOR
+// ========================================
+
+function obterClasseMarcador(categoria) {
+
+    if (
+        categoria === "Lixo acumulado"
+    ) {
+
+        return "limpeza";
+
     }
 
-    .page-header h1 {
-        font-size: 23px;
+
+    if (
+        categoria === "Iluminação"
+    ) {
+
+        return "iluminacao";
+
     }
 
-    .problems-header {
-        align-items: flex-start;
-        gap: 10px;
+
+    if (
+        categoria === "Buraco na rua"
+    ) {
+
+        return "vias";
+
     }
 
-    .new-badge {
-        font-size: 11px;
-        padding: 6px 9px;
+
+    if (
+        categoria === "Calçada danificada"
+    ) {
+
+        return "acessibilidade";
+
     }
+
+
+    if (
+        categoria === "Vazamento"
+    ) {
+
+        return "saneamento";
+
+    }
+
+
+    return "vias";
+
 }
+
+
+// ========================================
+// CRIA MARCADOR DE PROBLEMA NOVO
+// ========================================
+
+function criarMarcadorNovo(
+    problema,
+    index
+) {
+
+
+    // Cria o link
+
+    const link =
+        document.createElement("a");
+
+
+    // Link para os detalhes
+    // usando o ID real do problema
+    // e informando que veio do mapa
+
+    link.href =
+        "detalhes.html?problemaId=" +
+        problema.id +
+        "&origem=mapa";
+
+
+    // Título ao passar o mouse
+
+    link.title =
+        problema.titulo +
+        " - " +
+        problema.endereco;
+
+
+    // Cria o marcador
+
+    const marcador =
+        document.createElement("div");
+
+
+    marcador.classList.add(
+        "marcador"
+    );
+
+
+    // Adiciona a cor correspondente
+
+    marcador.classList.add(
+        obterClasseMarcador(
+            problema.categoria
+        )
+    );
+
+
+    // Define o ícone
+
+    marcador.innerText =
+        obterIcone(
+            problema.categoria
+        );
+
+
+    // ====================================
+    // POSIÇÃO
+    // ====================================
+
+    const posicao =
+        posicoesNovosMarcadores[
+            index % posicoesNovosMarcadores.length
+        ];
+
+
+    marcador.style.left =
+        posicao.left;
+
+
+    marcador.style.top =
+        posicao.top;
+
+
+    // ====================================
+    // ADICIONA AO MAPA
+    // ====================================
+
+    link.appendChild(
+        marcador
+    );
+
+
+    mapa.appendChild(
+        link
+    );
+
+
+    console.log(
+        "Novo marcador criado:",
+        problema.titulo,
+        problema.endereco
+    );
+
+}
+
+
+// ========================================
+// ADICIONA OS PROBLEMAS NOVOS AO MAPA
+// ========================================
+
+problemasSalvos.forEach(
+    function(problema, index) {
+
+        criarMarcadorNovo(
+            problema,
+            index
+        );
+
+    }
+);
+
+
+// ========================================
+// ATUALIZA O AVISO DO MAPA
+// ========================================
+
+
+// Quantos dos 5 problemas fixos
+// foram excluídos
+
+const fixosExcluidos =
+    problemasExcluidos.filter(
+        function(id) {
+
+            return id >= 1 && id <= 5;
+
+        }
+    ).length;
+
+
+// Total de problemas
+
+const totalProblemas =
+    (5 - fixosExcluidos) +
+    problemasSalvos.length;
+
+
+// Pega o aviso
+
+const mapaInfo =
+    document.querySelector(".mapa-info");
+
+
+if (mapaInfo) {
+
+    mapaInfo.innerText =
+        "📍 Existem " +
+        totalProblemas +
+        " problemas registrados atualmente no bairro. " +
+        "Clique em um marcador para visualizar os detalhes do problema.";
+
+}
+
+
+// ========================================
+// INFORMAÇÃO NO CONSOLE
+// ========================================
+
+console.log(
+    "Total de problemas no mapa:",
+    totalProblemas
+);
+
+
+// ========================================
+// FILTRO POR CATEGORIA
+// ========================================
+
+const seletorCategoriaMapa =
+    document.querySelector(
+        "#filtro-categoria-mapa"
+    );
+
+
+function filtrarMarcadores() {
+
+    const categoriaEscolhida =
+        seletorCategoriaMapa.value;
+
+
+    // Pega todos os marcadores atuais
+    // (fixos e novos, já que os novos
+    // também são links dentro do mapa)
+
+    const todosMarcadores =
+        document.querySelectorAll(
+            ".mapa > a"
+        );
+
+
+    todosMarcadores.forEach(
+        function(link) {
+
+            const marcador =
+                link.querySelector(
+                    ".marcador"
+                );
+
+
+            const combina =
+                categoriaEscolhida === "todas" ||
+                marcador.classList.contains(
+                    categoriaEscolhida
+                );
+
+
+            link.style.display =
+                combina ? "" : "none";
+
+        }
+    );
+
+}
+
+
+if (seletorCategoriaMapa) {
+
+    seletorCategoriaMapa.addEventListener(
+        "change",
+        filtrarMarcadores
+    );
+
+}
+
