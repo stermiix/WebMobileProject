@@ -63,3 +63,4 @@ A ordem é relevante. O navegador lê os arquivos na sequência em que são decl
 Os cinco arquivos HTML somavam 4.198 linhas e passaram a somar 1.802, uma redução de 57 por cento, restando neles apenas a estrutura da página. O CSS ocupa agora 1.314 linhas distribuídas em seis arquivos.
 
 Além de eliminar a duplicação, a organização permite que o navegador reaproveite o `style.css` armazenado em cache ao navegar entre as telas, uma vez que o arquivo é o mesmo para todas.
+
