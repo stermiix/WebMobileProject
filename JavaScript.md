@@ -473,3 +473,4 @@ Abrir detalhes do problema
 ```
 
 As funcionalidades podem ser ampliadas posteriormente conforme a evolução do projeto.
+
