@@ -104,6 +104,30 @@ const problemaId =
 
 
 // ========================================
+// USUÁRIO LOGADO
+// ========================================
+
+// Pega o nome do usuário salvo no login
+
+let nomeUsuarioLogado =
+    localStorage.getItem("nomeUsuario");
+
+
+// Caso não exista um nome salvo,
+// utiliza o nome padrão do protótipo
+
+if (
+    nomeUsuarioLogado === null ||
+    nomeUsuarioLogado.trim() === ""
+) {
+
+    nomeUsuarioLogado =
+        "João da Silva";
+
+}
+
+
+// ========================================
 // IDENTIFICA A ORIGEM
 // ========================================
 
@@ -495,6 +519,33 @@ if (problemaSelecionado.foto) {
 
 
 // ========================================
+// FUNÇÃO - NOME DO MORADOR
+// ========================================
+
+// Retorna o nome salvo no problema.
+// Caso um problema criado pelo usuário
+// não tenha um morador registrado, utiliza
+// o usuário atualmente logado.
+
+function obterMorador(problema) {
+
+    if (
+        problema.morador === undefined ||
+        problema.morador === null ||
+        problema.morador.trim() === ""
+    ) {
+
+        return nomeUsuarioLogado;
+
+    }
+
+
+    return problema.morador;
+
+}
+
+
+// ========================================
 // PREENCHE AS INFORMAÇÕES
 // ========================================
 
@@ -513,7 +564,9 @@ if (informacoes.length >= 4) {
 
 
     informacoes[3].innerText =
-        problemaSelecionado.morador;
+        obterMorador(
+            problemaSelecionado
+        );
 
 }
 
@@ -588,6 +641,10 @@ if (
 
 }
 
+
+// ========================================
+// CLIQUE NOS BOTÕES DE VOTO
+// ========================================
 
 botoesVoto.forEach(
     function(botao) {
