@@ -1,0 +1,247 @@
+/* ==============================
+   CONFIGURAÇÃO GERAL
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background: #f4f7fb;
+
+    color: #172033;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+
+/* ==============================
+   CONTAINER
+============================== */
+
+.login-container {
+    width: 100%;
+
+    max-width: 430px;
+}
+
+
+
+/* ==============================
+   CARD
+============================== */
+
+.login-card {
+    background: white;
+
+    border: 1px solid #e1e5eb;
+
+    border-radius: 14px;
+
+    padding: 32px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.08);
+}
+
+
+
+/* ==============================
+   LOGO
+============================== */
+
+.login-logo {
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+
+.logo-icon {
+    width: 60px;
+
+    height: 60px;
+
+    background: #2463eb;
+
+    color: white;
+
+    border-radius: 14px;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 28px;
+}
+
+
+.login-logo h1 {
+    font-size: 27px;
+
+    margin-bottom: 7px;
+}
+
+
+.login-logo p {
+    font-size: 14px;
+
+    color: #64748b;
+
+    line-height: 1.5;
+}
+
+
+
+/* ==============================
+   CAMPOS
+============================== */
+
+.campo {
+    margin-bottom: 18px;
+}
+
+
+.campo label {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+
+.campo input {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border: 1px solid #d7dde6;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+
+.campo input:focus {
+    border-color: #2463eb;
+
+    box-shadow:
+        0 0 0 3px rgba(36, 99, 235, 0.1);
+}
+
+
+
+/* ==============================
+   BOTÃO ENTRAR
+============================== */
+
+.botao-entrar {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #2463eb;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    margin-top: 5px;
+}
+
+
+.botao-entrar:hover {
+    background: #1d4ed8;
+}
+
+
+
+/* ==============================
+   MENSAGEM
+============================== */
+
+.mensagem-login {
+    min-height: 20px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #ef4444;
+}
+
+
+
+/* ==============================
+   INFORMAÇÃO
+============================== */
+
+.login-info {
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e5e7eb;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    color: #94a3b8;
+}
+
+
+
+/* ==============================
+   RESPONSIVO
+============================== */
+
+@media (max-width: 500px) {
+
+    .login-card {
+        padding: 25px 20px;
+    }
+
+    .login-logo h1 {
+        font-size: 24px;
+    }
+
+}
