@@ -1,4 +1,153 @@
-# WebMobileProject
+# WebMobileProject — Meu Bairro
+
+**Integrantes:**
+
+- Leonardo de Castro Tonon — RA 10426930
+- Leonardo Patriani Cardoso — RA 10417188
+- Antonio Renilson Bezerra da Silva — RA 10722184
+- Bernardo Souza Oliveira — RA 10312871
+
+O **Meu Bairro** é uma aplicação para que moradores registrem, visualizem e acompanhem problemas da sua comunidade (buracos, lixo acumulado, iluminação, vazamentos), relacionada ao **ODS 11 — Cidades e Comunidades Sustentáveis**.
+
+O projeto começou em HTML, CSS e JavaScript puros e está sendo migrado para **React com Next.js**.
+
+---
+
+# Tutorial — Versão React / Next.js
+
+## 1. Pré-requisitos
+
+- [Node.js](https://nodejs.org) instalado (versão 20 ou superior).
+- Para conferir, rode no terminal:
+
+```bash
+node -v
+npm -v
+```
+
+## 2. Como rodar o projeto
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/stermiix/WebMobileProject.git
+cd WebMobileProject/meu-bairro
+```
+
+2. Instale as dependências (cria a pasta `node_modules`):
+
+```bash
+npm install
+```
+
+3. Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+4. Abra [http://localhost:3000](http://localhost:3000) no navegador.
+
+## 3. Como o projeto foi criado
+
+O projeto foi gerado com o comando oficial do Next.js:
+
+```bash
+npx create-next-app@latest meu-bairro --js --app --no-tailwind --no-eslint
+```
+
+| Opção | Motivo |
+|---|---|
+| `--js` | Usar JavaScript (sem TypeScript) |
+| `--app` | Usar o App Router (rotas definidas pela pasta `app/`) |
+| `--no-tailwind` | A estilização é feita com CSS global e CSS Modules |
+| `--no-eslint` | Manter o projeto o mais simples possível |
+
+Depois disso, os arquivos de exemplo do Next.js foram removidos.
+
+## 4. Estrutura de pastas
+
+```
+WebMobileProject/
+├── meu-bairro/                  Projeto Next.js
+│   ├── app/
+│   │   ├── layout.js            Estrutura comum a todas as páginas (Header + página atual)
+│   │   ├── globals.css          CSS global (reset, body, links)
+│   │   ├── page.js              Página inicial "/" (Mapa do bairro)
+│   │   └── page.module.css      CSS Module da página do mapa
+│   ├── components/
+│   │   ├── Header.js            Componente do cabeçalho com o menu
+│   │   └── Header.module.css    CSS Module do cabeçalho
+│   ├── public/                  Arquivos estáticos (imagens)
+│   └── package.json             Dependências e scripts
+└── projeto-antigo/              Versão anterior em HTML, CSS e JavaScript
+```
+
+## 5. Conceitos utilizados
+
+### Componentes
+
+Um componente é uma função JavaScript que retorna JSX (HTML dentro do JavaScript). O cabeçalho, que antes era repetido em todos os arquivos HTML, virou o componente `Header`, escrito uma única vez e usado no `layout.js`.
+
+```jsx
+import Header from "@/components/Header";
+
+<Header />
+```
+
+### Layout
+
+O `app/layout.js` envolve todas as páginas. A prop `children` representa a página da rota acessada:
+
+```jsx
+<body>
+  <Header />
+  {children}
+</body>
+```
+
+### Rotas pela pasta `app/`
+
+Cada pasta dentro de `app/` que possui um arquivo `page.js` vira uma rota:
+
+| Arquivo | URL |
+|---|---|
+| `app/page.js` | `/` |
+| `app/sobre/page.js` | `/sobre` |
+
+### CSS global e CSS Modules
+
+- `app/globals.css`: regras que valem para todo o site (antigo `style.css`).
+- `*.module.css`: regras que valem apenas para um componente ou página. O Next.js gera nomes de classe únicos, evitando conflitos.
+
+```jsx
+import styles from "./page.module.css";
+
+<div className={styles.legenda}></div>
+```
+
+### Diferenças entre HTML e JSX
+
+| HTML | JSX |
+|---|---|
+| `class="logo"` | `className={styles.logo}` |
+| `for="campo"` | `htmlFor="campo"` |
+| `<a href="criar.html">` | `<Link href="/criar">` |
+
+## 6. Andamento da migração
+
+| Check-in | Entrega | Status |
+|---|---|---|
+| 2 | Estrutura inicial em Next.js, CSS global, componente `Header` e página do mapa (HTML e CSS) | ✅ |
+| 3 | Componentes React e interatividade com `useState` | ⏳ |
+| 4 | Rotas simples (`/sobre`) e dinâmicas | ⏳ |
+| 5 | Rota de API com JSON fixo consumida com `fetch` e `useEffect` | ⏳ |
+
+---
+
+# Projeto 1 — Versão HTML, CSS e JavaScript
+
+Os arquivos desta versão estão na pasta `projeto-antigo/`.
 
 ## Meu Bairro — Descrição das Funcionalidades do Protótipo Mobile
 
@@ -175,3 +324,4 @@ Buraco na rua
 
 Morador:
 Maria Souza
+```
