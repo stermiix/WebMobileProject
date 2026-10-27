@@ -1,3 +1,5 @@
+"use client";
+
 /*
   Leonardo de Castro Tonon - RA 10426930
   Leonardo Patriani Cardoso - RA 10417188
@@ -6,9 +8,16 @@
 */
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 
 export default function Header() {
+  const pathname = usePathname();
+
+  if (pathname === "/login") {
+    return null;
+  }
+
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.logo}>

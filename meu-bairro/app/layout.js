@@ -7,6 +7,7 @@
 
 import "./globals.css";
 import Header from "@/components/Header";
+import ProtecaoRotas from "@/components/ProtecaoRotas";
 
 export const metadata = {
   title: "Meu Bairro",
@@ -17,8 +18,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <body>
-        <Header />
-        {children}
+        <ProtecaoRotas>
+          <Header />
+          {children}
+        </ProtecaoRotas>
       </body>
     </html>
   );

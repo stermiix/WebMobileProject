@@ -1,0 +1,455 @@
+/*
+  Leonardo de Castro Tonon - RA 10426930
+  Leonardo Patriani Cardoso - RA 10417188
+  Antonio Renilson Bezerra da Silva - RA 10722184
+  Bernardo Souza Oliveira - RA 10312871
+*/
+
+.container {
+  width: min(100% - 40px, 850px);
+  margin: 34px auto;
+  color: #172033;
+}
+
+.cabecalho {
+  margin-bottom: 25px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 7px;
+  color: #172033;
+  font-size: 29px;
+}
+
+.cabecalho p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* PERFIL E SEÇÕES */
+
+.cartao {
+  margin-bottom: 20px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e1e5eb;
+  border-radius: 13px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 4%);
+}
+
+.cartao > h2 {
+  margin: 0;
+  padding: 17px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.perfil {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+}
+
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  color: #ffffff;
+  background: #2463eb;
+  border-radius: 50%;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.perfilInfo {
+  min-width: 0;
+}
+
+.perfilInfo h3 {
+  margin: 0 0 5px;
+  font-size: 19px;
+}
+
+.perfilInfo p {
+  margin: 0 0 4px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* OPÇÕES */
+
+.opcao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 76px;
+  padding: 15px 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cartao > .opcao:last-child {
+  border-bottom: none;
+}
+
+.opcaoInfo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: #eef4ff;
+  border-radius: 10px;
+  font-size: 19px;
+}
+
+.opcaoTexto {
+  display: block;
+  min-width: 0;
+}
+
+.opcaoTexto strong,
+.opcaoTexto > span {
+  display: block;
+}
+
+.opcaoTexto strong {
+  margin-bottom: 3px;
+  color: #172033;
+  font-size: 15px;
+}
+
+.opcaoTexto > span {
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* TEXTO AUXILIAR */
+
+.texto {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* BOTÃO DE ALTERNÂNCIA DAS NOTIFICAÇÕES */
+
+.toggle {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  padding: 0;
+  background: #2463eb;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle span {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: left 0.2s, right 0.2s;
+}
+
+.toggle.desativado {
+  background: #cbd5e1;
+}
+
+.toggle.desativado span {
+  right: auto;
+  left: 3px;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid #2463eb;
+  outline-offset: 3px;
+}
+
+/* LINKS DE PRIVACIDADE, AJUDA E SOBRE */
+
+.opcaoLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 76px;
+  padding: 15px 18px;
+  color: #172033;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.opcaoLink:last-child {
+  border-bottom: none;
+}
+
+.opcaoLink:hover {
+  background: #f8fbff;
+}
+
+.opcaoLink:focus-visible {
+  position: relative;
+  outline: 2px solid #2463eb;
+  outline-offset: -3px;
+}
+
+.seta {
+  flex-shrink: 0;
+  margin-left: 12px;
+  color: #94a3b8;
+  font-size: 25px;
+  line-height: 1;
+}
+
+/* BOTÃO SAIR */
+
+.sair {
+  width: 100%;
+  padding: 14px;
+  color: #ef4444;
+  background: #ffffff;
+  border: 1px solid #ef4444;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sair:hover {
+  color: #ffffff;
+  background: #ef4444;
+}
+
+.sair:focus-visible {
+  outline: 2px solid #ef4444;
+  outline-offset: 3px;
+}
+
+/* FUNDO DO MODAL */
+
+.modalFundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgb(15 23 42 / 55%);
+}
+
+/* JANELA DO MODAL */
+
+.modal {
+  width: 100%;
+  max-width: 520px;
+  max-height: min(80vh, 700px);
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+}
+
+/* CABEÇALHO DO MODAL */
+
+.modalCabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modalCabecalho h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 20px;
+}
+
+.modalFechar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.modalFechar:hover {
+  color: #172033;
+  background: #f1f5f9;
+}
+
+/* CONTEÚDO DO MODAL */
+
+.modalConteudo {
+  padding: 20px;
+}
+
+.modalConteudo h3 {
+  margin: 18px 0 6px;
+  color: #172033;
+  font-size: 15px;
+}
+
+.modalConteudo h3:first-child {
+  margin-top: 0;
+}
+
+.modalConteudo p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* RODAPÉ DO MODAL */
+
+.modalRodape {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.modalBotaoFechar {
+  padding: 10px 20px;
+  color: #ffffff;
+  background: #2463eb;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modalBotaoFechar:hover {
+  background: #1d4ed8;
+}
+
+.modalBotaoFechar:focus-visible,
+.modalFechar:focus-visible {
+  outline: 2px solid #2463eb;
+  outline-offset: 3px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+  .container {
+    width: calc(100% - 30px);
+    margin-top: 25px;
+  }
+
+  .cabecalho h1 {
+    font-size: 25px;
+  }
+
+  .perfil {
+    padding: 20px;
+  }
+
+  .modal {
+    max-width: 100%;
+  }
+
+  .modalConteudo p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  .perfil {
+    align-items: flex-start;
+    gap: 13px;
+    padding: 17px;
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 21px;
+  }
+
+  .perfilInfo h3 {
+    font-size: 16px;
+  }
+
+  .opcao,
+  .opcaoLink {
+    padding: 13px;
+  }
+
+  .opcaoInfo {
+    gap: 10px;
+  }
+
+  .icone {
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+  }
+
+  .opcaoTexto strong {
+    font-size: 14px;
+  }
+
+  .opcaoTexto > span {
+    font-size: 12px;
+  }
+
+  .modalFundo {
+    padding: 12px;
+  }
+
+  .modalCabecalho,
+  .modalConteudo,
+  .modalRodape {
+    padding: 15px;
+  }
+}

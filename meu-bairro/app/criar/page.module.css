@@ -1,0 +1,345 @@
+/*
+  Leonardo de Castro Tonon - RA 10426930
+  Leonardo Patriani Cardoso - RA 10417188
+  Antonio Renilson Bezerra da Silva - RA 10722184
+  Bernardo Souza Oliveira - RA 10312871
+*/
+
+.container {
+  width: min(100% - 32px, 1000px);
+  margin: 40px auto;
+  color: #172b4d;
+}
+
+.cabecalho {
+  margin-bottom: 24px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+}
+
+.cabecalho p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.formulario {
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgb(15 23 42 / 5%);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.grupo:last-child {
+  margin-bottom: 0;
+}
+
+.grupo h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.grupo label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.grupo input[type="text"],
+.grupo textarea {
+  width: 100%;
+  padding: 12px 14px;
+  color: #172b4d;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+  outline: none;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.grupo input[type="text"]:focus,
+.grupo textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 12%);
+}
+
+.grupo textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.grupo input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+.categorias {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.categoria {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 60px;
+  padding: 12px;
+  color: #334155;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.categoria:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.categoria.selecionada,
+.selecionada {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.categoria:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.categoria span:first-child {
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+.ajuda {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.campoLocalizacao {
+  display: flex;
+  gap: 10px;
+}
+
+.campoLocalizacao input {
+  flex: 1;
+  min-width: 0;
+}
+
+.botaoLocalizacao {
+  padding: 0 15px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: none;
+  border-radius: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.botaoLocalizacao:hover {
+  background: #dbeafe;
+}
+
+.areaFoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-height: 150px;
+  padding: 24px;
+  color: #64748b;
+  background: #fafafa;
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.areaFoto:hover {
+  background: #f8fbff;
+  border-color: #93c5fd;
+}
+
+.iconeFoto {
+  font-size: 32px;
+}
+
+.areaFoto small {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.previaFoto {
+  display: block;
+  max-width: 100%;
+  max-height: 250px;
+  margin: 0 auto;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.contadorDescricao {
+  align-self: flex-end;
+  margin-top: -4px;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.botaoPublicar {
+  width: 100%;
+  padding: 14px 18px;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.botaoPublicar:hover {
+  background: #1d4ed8;
+}
+
+.botaoPublicar:active {
+  transform: scale(0.99);
+}
+
+.botaoPublicar:focus-visible,
+.botaoLocalizacao:focus-visible,
+.areaFoto:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}
+
+.mensagemSucesso {
+  padding: 50px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgb(15 23 42 / 5%);
+  text-align: center;
+}
+
+.sucessoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  color: #16a34a;
+  background: #dcfce7;
+  border-radius: 50%;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.mensagemSucesso h2 {
+  margin: 0 0 10px;
+  color: #111827;
+}
+
+.mensagemSucesso p {
+  margin: 0 0 25px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.mensagemSucesso a {
+  display: inline-block;
+  padding: 12px 24px;
+  color: #ffffff;
+  background: #2563eb;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mensagemSucesso a:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 700px) {
+  .container {
+    margin-top: 24px;
+  }
+
+  .cabecalho h1 {
+    font-size: 25px;
+  }
+
+  .formulario {
+    padding: 20px;
+  }
+
+  .categorias {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    width: calc(100% - 30px);
+  }
+
+  .cabecalho h1 {
+    font-size: 23px;
+  }
+
+  .campoLocalizacao {
+    flex-direction: column;
+  }
+
+  .botaoLocalizacao {
+    min-height: 42px;
+  }
+
+  .areaFoto {
+    padding: 20px 12px;
+  }
+
+  .mensagemSucesso {
+    padding: 35px 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .categorias {
+    grid-template-columns: 1fr;
+  }
+
+  .formulario {
+    padding: 16px;
+  }
+}

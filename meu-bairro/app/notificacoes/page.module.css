@@ -1,0 +1,309 @@
+/*
+  Leonardo de Castro Tonon - RA 10426930
+  Leonardo Patriani Cardoso - RA 10417188
+  Antonio Renilson Bezerra da Silva - RA 10722184
+  Bernardo Souza Oliveira - RA 10312871
+*/
+
+.container {
+  width: min(100% - 40px, 1000px);
+  margin: 0 auto;
+  padding: 35px 0 50px;
+  color: #172b4d;
+}
+
+.cabecalho {
+  margin-bottom: 28px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.cabecalho p {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.filtros input {
+  flex: 1;
+  min-width: 220px;
+  padding: 11px 14px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  color: #172b4d;
+  font-size: 14px;
+  outline: none;
+}
+
+.filtros input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
+}
+
+.filtros select {
+  padding: 11px 14px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cabecalhoLista {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.cabecalhoLista h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.indicador {
+  padding: 7px 13px;
+  background: #16a34a;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.linkProblema {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 17px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.linkProblema:hover .card {
+  transform: translateY(-2px);
+  border-color: #bfdbfe;
+  box-shadow: 0 5px 14px rgb(0 0 0 / 10%);
+}
+
+.naoVisualizado {
+  border-left: 4px solid #16a34a;
+  background: #fcfffc;
+}
+
+.icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  color: #ffffff;
+  font-size: 25px;
+}
+
+.red {
+  background: #ef4444;
+}
+
+.yellow {
+  background: #f59e0b;
+}
+
+.orange {
+  background: #f97316;
+}
+
+.purple {
+  background: #8b5cf6;
+}
+
+.blue {
+  background: #2563eb;
+}
+
+.conteudo {
+  min-width: 0;
+}
+
+.linhaTitulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.linhaTitulo h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.categoria {
+  padding: 4px 8px;
+  background: #eef2ff;
+  border-radius: 10px;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pontoNotificacao {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  background: #16a34a;
+  border-radius: 50%;
+}
+
+.informacoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 15px;
+  margin-bottom: 9px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.descricao {
+  max-width: 700px;
+  margin: 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 9px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.statusNovo {
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: 700;
+}
+
+.statusResolvido {
+  background: #dbeafe;
+  color: #1e40af;
+  font-weight: 700;
+}
+
+.data {
+  color: #6b7280;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.rodape {
+  margin-top: 25px;
+  color: #9ca3af;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 750px) {
+  .card {
+    grid-template-columns: 50px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .icone {
+    width: 50px;
+    height: 50px;
+    font-size: 21px;
+  }
+
+  .data {
+    grid-column: 2;
+    margin-top: -5px;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    width: calc(100% - 30px);
+    padding: 25px 0 40px;
+  }
+
+  .cabecalho h1 {
+    font-size: 23px;
+  }
+
+  .filtros {
+    flex-direction: column;
+  }
+
+  .filtros input,
+  .filtros select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .cabecalhoLista {
+    align-items: flex-start;
+  }
+
+  .cabecalhoLista h2 {
+    font-size: 16px;
+  }
+
+  .indicador {
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+
+  .card {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .linhaTitulo h3 {
+    font-size: 15px;
+  }
+
+  .informacoes {
+    flex-direction: column;
+    gap: 7px;
+  }
+}

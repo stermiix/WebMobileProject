@@ -1,0 +1,378 @@
+/*
+  Leonardo de Castro Tonon - RA 10426930
+  Leonardo Patriani Cardoso - RA 10417188
+  Antonio Renilson Bezerra da Silva - RA 10722184
+  Bernardo Souza Oliveira - RA 10312871
+*/
+
+.container {
+  width: min(100% - 40px, 850px);
+  margin: 32px auto;
+  color: #172b4d;
+}
+
+.voltar {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #2463eb;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.voltar:hover {
+  text-decoration: underline;
+}
+
+.cartaoPrincipal {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e1e5eb;
+  border-radius: 13px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+.fotoProblema {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 280px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+
+.categoriaFoto {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  padding: 8px 13px;
+  color: #ffffff;
+  background: #2463eb;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.imagemProblema {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iconeGrande {
+  position: relative;
+  z-index: 1;
+  font-size: 70px;
+  line-height: 1;
+}
+
+.conteudoDetalhes {
+  padding: 25px;
+}
+
+.tituloProblema {
+  margin: 0 0 20px;
+  color: #172033;
+  font-size: 24px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.informacoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.info {
+  min-width: 0;
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.info strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.info span {
+  color: #172033;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.descricaoDetalhes {
+  margin-bottom: 25px;
+}
+
+.descricaoDetalhes h2,
+.mapaContainer h2,
+.votacao h2 {
+  margin: 0 0 10px;
+  color: #172033;
+  font-size: 17px;
+}
+
+.descricaoDetalhes p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.mapaContainer {
+  margin-bottom: 25px;
+}
+
+.mapaIlustrativo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 230px;
+  overflow: hidden;
+  background-color: #e8edf2;
+  background-image:
+    linear-gradient(
+      25deg,
+      transparent 45%,
+      #ffffff 46%,
+      #ffffff 54%,
+      transparent 55%
+    ),
+    linear-gradient(
+      110deg,
+      transparent 45%,
+      #ffffff 46%,
+      #ffffff 54%,
+      transparent 55%
+    );
+  background-size: 120px 120px;
+  border: 1px solid #dbe1e8;
+  border-radius: 12px;
+}
+
+.ruaHorizontal {
+  position: absolute;
+  top: 48%;
+  left: -5%;
+  width: 110%;
+  height: 38px;
+  background: #ffffff;
+  transform: rotate(-8deg);
+}
+
+.ruaVertical {
+  position: absolute;
+  top: -10%;
+  left: 48%;
+  width: 38px;
+  height: 120%;
+  background: #ffffff;
+  transform: rotate(12deg);
+}
+
+.marcador {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  background: #ef4444;
+  border: 4px solid #ffffff;
+  border-radius: 50% 50% 50% 0;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 25%);
+  transform: rotate(-45deg);
+}
+
+.marcador::after {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  content: "";
+}
+
+.enderecoMapa {
+  margin: 16px 0 6px;
+  color: #172033;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.ajuda {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.verMapa {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 16px;
+  color: #ffffff;
+  background: #2463eb;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.verMapa:hover {
+  background: #1d4ed8;
+}
+
+.votacao {
+  padding-top: 23px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.votacao p {
+  margin: 0 0 15px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.acoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.botaoPrincipal,
+.botaoSecundario {
+  min-width: 0;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #d9dee6;
+  border-radius: 10px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.botaoPrincipal:hover {
+  color: #2463eb;
+  background: #f8fbff;
+  border-color: #2463eb;
+}
+
+.botaoSecundario {
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.botaoSecundario:hover {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.votoSelecionado {
+  background: #eff6ff;
+  border-color: #2463eb;
+  color: #2463eb;
+}
+
+.botaoSecundario.votoResolvido {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.mensagemVoto {
+  margin-top: 15px;
+  padding: 12px;
+  background: #f0fdf4;
+  border-radius: 9px;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.botaoExcluir {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  background: #ffffff;
+  border: 1px solid #ef4444;
+  border-radius: 10px;
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.botaoExcluir:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+@media (max-width: 700px) {
+  .container {
+    margin-top: 22px;
+  }
+
+  .informacoes {
+    grid-template-columns: 1fr;
+  }
+
+  .acoes {
+    grid-template-columns: 1fr;
+  }
+
+  .fotoProblema {
+    height: 220px;
+  }
+
+  .conteudoDetalhes {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    width: calc(100% - 30px);
+  }
+
+  .tituloProblema {
+    font-size: 21px;
+  }
+
+  .fotoProblema {
+    height: 200px;
+  }
+
+  .categoriaFoto {
+    top: 12px;
+    left: 12px;
+    font-size: 12px;
+  }
+
+  .mapaIlustrativo {
+    height: 190px;
+  }
+}
