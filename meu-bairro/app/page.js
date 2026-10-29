@@ -1,3 +1,4 @@
+
 /*
   Leonardo de Castro Tonon - RA 10426930
   Leonardo Patriani Cardoso - RA 10417188
@@ -230,7 +231,7 @@ export default function Home() {
           {fixosFiltrados.map((problema) => (
             <Link
               key={`fixo-${problema.id}`}
-              href={`/detalhes?problemaId=${problema.id}&origem=mapa`}
+              href={`/detalhes/${problema.id}?origem=mapa`}
               className={`${styles.marcador} ${
                 styles[problema.categoria]
               } ${styles[problema.posicao]}`}
@@ -244,7 +245,7 @@ export default function Home() {
           {novosFiltrados.map((problema) => (
             <Link
               key={`novo-${problema.id}`}
-              href={`/detalhes?problemaId=${problema.id}&origem=mapa`}
+              href={`/detalhes/${problema.id}?origem=mapa`}
               className={`${styles.marcador} ${styles[problema.classe]}`}
               style={{
                 left: problema.posicao.left,

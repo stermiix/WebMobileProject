@@ -125,7 +125,7 @@ function obterIcone(categoria) {
   return icones[nome] || "⚠️";
 }
 
-export default function DetalhesPage() {
+export default function DetalhesPage({ problemaIdInicial = null }) {
   const [problema, setProblema] = useState(problemasFixos[1]);
   const [origem, setOrigem] = useState("notificacoes");
   const [voto, setVoto] = useState("");
@@ -135,7 +135,7 @@ export default function DetalhesPage() {
 
   useEffect(() => {
     const parametros = new URLSearchParams(window.location.search);
-    const id = parametros.get("problemaId");
+    const id = problemaIdInicial ?? parametros.get("problemaId");
     const origemUrl = parametros.get("origem");
 
     setOrigem(origemUrl === "mapa" ? "mapa" : "notificacoes");
@@ -191,7 +191,7 @@ export default function DetalhesPage() {
 
     setVoto(votoResolvido ? "resolvido" : "");
     setCarregado(true);
-  }, []);
+  }, [problemaIdInicial]);
 
   function registrarVoto(novoVoto) {
     const resolvidos = lerLista("problemasResolvidos");

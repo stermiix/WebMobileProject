@@ -1,3 +1,4 @@
+
 /*
   Leonardo de Castro Tonon - RA 10426930
   Leonardo Patriani Cardoso - RA 10417188
@@ -54,7 +55,8 @@ const problemasFixos = [
     categoria: "Acessibilidade",
     morador: "Ana Costa",
     endereco: "Rua da Paz, 210",
-    descricao: "A calçada apresenta partes quebradas e dificulta a passagem dos pedestres.",
+    descricao:
+      "A calçada apresenta partes quebradas e dificulta a passagem dos pedestres.",
     data: "29/08/2026",
     icone: "🚧",
     cor: "purple",
@@ -306,14 +308,16 @@ export default function NotificacoesPage() {
           return (
             <Link
               key={problema.id}
-              href={`/detalhes?problemaId=${encodeURIComponent(
+              href={`/detalhes/${encodeURIComponent(
                 problema.id
-              )}&origem=notificacoes`}
+              )}?origem=notificacoes`}
               className={styles.linkProblema}
               onClick={() => marcarComoVisualizado(problema.id)}
             >
               <article
-                className={`${styles.card} ${novo ? styles.naoVisualizado : ""}`}
+                className={`${styles.card} ${
+                  novo ? styles.naoVisualizado : ""
+                }`}
               >
                 <div className={`${styles.icone} ${styles[problema.cor]}`}>
                   {problema.icone}
