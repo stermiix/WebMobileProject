@@ -12,70 +12,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 
-const problemasFixos = [
-  {
-    id: 1,
-    titulo: "Lixo acumulado",
-    categoria: "Limpeza",
-    morador: "João da Silva",
-    endereco: "Rua das Flores, 125",
-    descricao: "Há bastante lixo acumulado próximo à calçada.",
-    data: "02/09/2026",
-    icone: "🗑️",
-    cor: "red",
-    novoInicial: true,
-  },
-  {
-    id: 2,
-    titulo: "Iluminação pública",
-    categoria: "Iluminação",
-    morador: "Maria Oliveira",
-    endereco: "Avenida Central, 450",
-    descricao: "O poste de iluminação está sem funcionar durante a noite.",
-    data: "01/09/2026",
-    icone: "💡",
-    cor: "yellow",
-    novoInicial: true,
-  },
-  {
-    id: 3,
-    titulo: "Buraco na rua",
-    categoria: "Vias públicas",
-    morador: "Carlos Mendes",
-    endereco: "Rua da Educação, 80",
-    descricao: "Existe um buraco grande na rua que pode causar acidentes.",
-    data: "30/08/2026",
-    icone: "🕳️",
-    cor: "orange",
-    novoInicial: false,
-  },
-  {
-    id: 4,
-    titulo: "Calçada danificada",
-    categoria: "Acessibilidade",
-    morador: "Ana Costa",
-    endereco: "Rua da Paz, 210",
-    descricao:
-      "A calçada apresenta partes quebradas e dificulta a passagem dos pedestres.",
-    data: "29/08/2026",
-    icone: "🚧",
-    cor: "purple",
-    novoInicial: false,
-  },
-  {
-    id: 5,
-    titulo: "Vazamento",
-    categoria: "Saneamento",
-    morador: "Pedro Santos",
-    endereco: "Rua Central, 300",
-    descricao: "Foi identificado um vazamento próximo à calçada.",
-    data: "28/08/2026",
-    icone: "💧",
-    cor: "blue",
-    novoInicial: false,
-  },
-];
-
 function lerLista(chave) {
   try {
     const valor = JSON.parse(localStorage.getItem(chave) || "[]");
@@ -143,55 +79,48 @@ function obterCor(categoria) {
 }
 
 export default function NotificacoesPage() {
-  const [problemas, setProblemas] = useState(problemasFixos);
+  const [problemas, setProblemas] = useState([]);
   const [termoBusca, setTermoBusca] = useState("");
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("todas");
   const [problemasVisualizados, setProblemasVisualizados] = useState([]);
   const [problemasResolvidos, setProblemasResolvidos] = useState([]);
-  const [problemasExcluidos, setProblemasExcluidos] = useState([]);
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
 
   useEffect(() => {
-    const salvos = lerLista("problemas");
     const visualizados = lerLista("problemasVisualizados");
-    const resolvidos = lerLista("problemasResolvidos");
-    const excluidos = lerLista("problemasExcluidos");
-
     const nomeUsuario = localStorage.getItem("nomeUsuario") || "João da Silva";
     const preferencia = localStorage.getItem("notificacoesAtivas");
 
-    const novosProblemas = salvos
-      .filter(
-        (problema) =>
-          !excluidos.some((id) => String(id) === String(problema.id))
-      )
-      .map((problema) => ({
-        ...problema,
-        categoria: obterCategoria(problema.categoria),
-        morador: problema.morador || nomeUsuario,
-        endereco: problema.endereco || "Localização não informada",
-        descricao: problema.descricao || "Sem descrição disponível.",
-        data: problema.data || "Data não informada",
-        icone: obterIcone(problema.categoria),
-        cor: obterCor(problema.categoria),
-        novoInicial: true,
-        fixo: false,
-      }));
-
-    setProblemas([
-      ...problemasFixos.map((problema) => ({
-        ...problema,
-        fixo: true,
-      })),
-      ...novosProblemas,
-    ]);
-
     setProblemasVisualizados(visualizados.map(String));
-    setProblemasResolvidos(resolvidos.map(String));
-    setProblemasExcluidos(excluidos.map(String));
     setNotificacoesAtivas(preferencia !== "false");
-  }, []);
 
+    fetch("/api/notificacoes")
+      .then((resposta) => {
+        if (!resposta.ok) throw new Error("Falha na API");
+        return resposta.json();
+      })
+      .then((dados) => {
+        const lista = Array.isArray(dados) ? dados : [];
+
+        setProblemas(
+          lista.map((problema) => ({
+            ...problema,
+            categoria: obterCategoria(problema.categoria),
+            morador: problema.morador || nomeUsuario,
+            endereco: problema.endereco || "Localização não informada",
+            descricao: problema.descricao || "Sem descrição disponível.",
+            data: problema.data || "Data não informada",
+            icone: obterIcone(problema.categoria),
+            cor: obterCor(problema.categoria),
+          }))
+        );
+
+        setProblemasResolvidos(
+          lista.filter((p) => p.status === "Resolvido").map((p) => String(p.id))
+        );
+      })
+      .catch(() => setProblemas([]));
+  }, []);
   function marcarComoVisualizado(id) {
     const idTexto = String(id);
 
@@ -207,9 +136,7 @@ export default function NotificacoesPage() {
     );
   }
 
-  const problemasVisiveis = problemas.filter(
-    (problema) => !problemasExcluidos.includes(String(problema.id))
-  );
+  const problemasVisiveis = problemas;
 
   function estaVisualizado(problema) {
     return problemasVisualizados.includes(String(problema.id));
