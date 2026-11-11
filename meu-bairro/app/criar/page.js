@@ -51,7 +51,7 @@ export default function CriarPage() {
     leitor.readAsDataURL(arquivo);
   }
 
-  function publicarProblema(evento) {
+  async function publicarProblema(evento) {
     evento.preventDefault();
 
     if (!categoriaSelecionada) {
@@ -71,44 +71,28 @@ export default function CriarPage() {
       return;
     }
 
-    const agora = new Date();
-
-    const dia = String(agora.getDate()).padStart(2, "0");
-    const mes = String(agora.getMonth() + 1).padStart(2, "0");
-    const ano = agora.getFullYear();
-    const hora = String(agora.getHours()).padStart(2, "0");
-    const minutos = String(agora.getMinutes()).padStart(2, "0");
-
     const nomeSalvo = localStorage.getItem("nomeUsuario");
     const nomeUsuario =
       nomeSalvo && nomeSalvo.trim() !== ""
         ? nomeSalvo
         : "João da Silva";
 
-    const novoProblema = {
-      id: Date.now(),
-      titulo: categoriaSelecionada,
-      categoria: categoriaSelecionada,
-      endereco: localizacao.trim(),
-      data: `${dia}/${mes}/${ano}`,
-      horario: `${hora}:${minutos}`,
-      morador: nomeUsuario,
-      descricao: descricao.trim(),
-      foto: fotoSelecionada || null,
-    };
-
     try {
-      const dadosSalvos = JSON.parse(
-        localStorage.getItem("problemas") || "[]"
-      );
+      const resposta = await fetch("/api/problemas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          titulo: categoriaSelecionada,
+          endereco: localizacao.trim(),
+          morador: nomeUsuario,
+          descricao: descricao.trim(),
+          foto: fotoSelecionada || null,
+        }),
+      });
 
-      const problemasSalvos = Array.isArray(dadosSalvos)
-        ? dadosSalvos
-        : [];
-
-      problemasSalvos.push(novoProblema);
-
-      localStorage.setItem("problemas", JSON.stringify(problemasSalvos));
+      if (!resposta.ok) {
+        throw new Error("Falha ao salvar");
+      }
 
       setPublicado(true);
     } catch {
@@ -117,7 +101,6 @@ export default function CriarPage() {
       );
     }
   }
-
   if (publicado) {
     return (
       <main className={styles.container}>
