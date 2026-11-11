@@ -12,49 +12,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 
-const problemasFixos = [
-  {
-    id: 1,
-    titulo: "Lixo acumulado",
-    categoria: "limpeza",
-    icone: "🗑️",
-    posicao: "m1",
-    endereco: "Rua das Flores",
-  },
-  {
-    id: 2,
-    titulo: "Iluminação pública",
-    categoria: "iluminacao",
-    icone: "💡",
-    posicao: "m2",
-    endereco: "Rua da Educação",
-  },
-  {
-    id: 3,
-    titulo: "Buraco na rua",
-    categoria: "vias",
-    icone: "🕳️",
-    posicao: "m3",
-    endereco: "Avenida Central",
-  },
-  {
-    id: 4,
-    titulo: "Calçada danificada",
-    categoria: "acessibilidade",
-    icone: "🚧",
-    posicao: "m4",
-    endereco: "Avenida Principal",
-  },
-  {
-    id: 5,
-    titulo: "Vazamento",
-    categoria: "saneamento",
-    icone: "💧",
-    posicao: "m5",
-    endereco: "Rua da Paz",
-  },
-];
-
 const posicoesNovosMarcadores = [
   { left: "350px", top: "80px" },
   { left: "595px", top: "250px" },
@@ -110,51 +67,40 @@ function obterIcone(categoria) {
 
 export default function Home() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("todas");
-  const [problemasSalvos, setProblemasSalvos] = useState([]);
-  const [problemasExcluidos, setProblemasExcluidos] = useState([]);
+  const [problemas, setProblemas] = useState([]);
+  const [erro, setErro] = useState(false);
 
   useEffect(() => {
-    try {
-      const problemas = JSON.parse(
-        localStorage.getItem("problemas") || "[]"
-      );
-
-      const excluidos = JSON.parse(
-        localStorage.getItem("problemasExcluidos") || "[]"
-      );
-
-      setProblemasSalvos(Array.isArray(problemas) ? problemas : []);
-      setProblemasExcluidos(
-        Array.isArray(excluidos) ? excluidos.map(String) : []
-      );
-    } catch {
-      setProblemasSalvos([]);
-      setProblemasExcluidos([]);
-    }
+    fetch("/api/problemas")
+      .then((resposta) => {
+        if (!resposta.ok) throw new Error("Falha na API");
+        return resposta.json();
+      })
+      .then((dados) => setProblemas(Array.isArray(dados) ? dados : []))
+      .catch(() => setErro(true));
   }, []);
 
-  const fixosVisiveis = problemasFixos.filter(
-    (problema) => !problemasExcluidos.includes(String(problema.id))
-  );
+  const todosVisiveis = problemas.map((problema) => ({
+    ...problema,
+    classe: obterClasseMarcador(problema.categoria),
+    icone: obterIcone(problema.categoria),
+  }));
 
-  const novosVisiveis = problemasSalvos
-    .filter(
-      (problema) => !problemasExcluidos.includes(String(problema.id))
-    )
+  const fixosVisiveis = todosVisiveis.filter((problema) => problema.posicao);
+
+  const novosVisiveis = todosVisiveis
+    .filter((problema) => !problema.posicao)
     .map((problema, index) => ({
       ...problema,
-      classe: obterClasseMarcador(problema.categoria),
-      icone: obterIcone(problema.categoria),
       posicao:
         posicoesNovosMarcadores[
           index % posicoesNovosMarcadores.length
         ],
     }));
-
   const fixosFiltrados = fixosVisiveis.filter(
     (problema) =>
       categoriaSelecionada === "todas" ||
-      problema.categoria === categoriaSelecionada
+      problema.classe === categoriaSelecionada
   );
 
   const novosFiltrados = novosVisiveis.filter(
@@ -233,7 +179,7 @@ export default function Home() {
               key={`fixo-${problema.id}`}
               href={`/detalhes/${problema.id}?origem=mapa`}
               className={`${styles.marcador} ${
-                styles[problema.categoria]
+                styles[problema.classe]
               } ${styles[problema.posicao]}`}
               title={problema.titulo}
               aria-label={`Ver detalhes: ${problema.titulo}`}
@@ -300,6 +246,7 @@ export default function Home() {
         </div>
 
         <div className={styles.mapaInfo}>
+          {erro && "Não foi possível carregar os problemas. "}
           📍 Existem {totalProblemas} problemas registrados atualmente no
           bairro. Clique em um marcador para visualizar os detalhes do
           problema.
