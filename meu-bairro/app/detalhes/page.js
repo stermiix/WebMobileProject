@@ -11,77 +11,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 
-const problemasFixos = {
-  1: {
-    id: 1,
-    titulo: "Lixo acumulado",
-    categoria: "Limpeza",
-    icone: "🗑️",
-    endereco: "Rua das Flores, 125",
-    data: "02/09/2026",
-    horario: "14:30",
-    morador: "João da Silva",
-    descricao:
-      "Foi identificado um grande acúmulo de lixo próximo à calçada. O local está com bastante sujeira e precisa de limpeza para evitar problemas para os moradores da região.",
-  },
-  2: {
-    id: 2,
-    titulo: "Iluminação pública",
-    categoria: "Iluminação",
-    icone: "💡",
-    endereco: "Avenida Central, 450",
-    data: "01/09/2026",
-    horario: "20:15",
-    morador: "Maria Oliveira",
-    descricao:
-      "O poste de iluminação está sem funcionar durante a noite, deixando a região com pouca iluminação.",
-  },
-  3: {
-    id: 3,
-    titulo: "Buraco na rua",
-    categoria: "Vias públicas",
-    icone: "🕳️",
-    endereco: "Rua da Educação, 80",
-    data: "30/08/2026",
-    horario: "09:40",
-    morador: "Carlos Mendes",
-    descricao:
-      "Existe um buraco grande na rua que pode causar acidentes para motoristas, motociclistas e pedestres.",
-  },
-  4: {
-    id: 4,
-    titulo: "Calçada danificada",
-    categoria: "Acessibilidade",
-    icone: "🚧",
-    endereco: "Rua da Paz, 210",
-    data: "29/08/2026",
-    horario: "16:20",
-    morador: "Ana Costa",
-    descricao:
-      "A calçada apresenta partes quebradas e dificulta a passagem dos pedestres.",
-  },
-  5: {
-    id: 5,
-    titulo: "Vazamento",
-    categoria: "Saneamento",
-    icone: "💧",
-    endereco: "Rua Central, 300",
-    data: "28/08/2026",
-    horario: "11:10",
-    morador: "Pedro Santos",
-    descricao: "Foi identificado um vazamento próximo à calçada.",
-  },
-};
-
-function lerLista(chave) {
-  try {
-    const dados = JSON.parse(localStorage.getItem(chave) || "[]");
-    return Array.isArray(dados) ? dados : [];
-  } catch {
-    return [];
-  }
-}
-
 function obterCategoria(categoria) {
   const texto = String(categoria || "")
     .normalize("NFD")
@@ -126,7 +55,7 @@ function obterIcone(categoria) {
 }
 
 export default function DetalhesPage({ problemaIdInicial = null }) {
-  const [problema, setProblema] = useState(problemasFixos[1]);
+  const [problema, setProblema] = useState({});
   const [origem, setOrigem] = useState("notificacoes");
   const [voto, setVoto] = useState("");
   const [mensagemVoto, setMensagemVoto] = useState("");
@@ -135,99 +64,73 @@ export default function DetalhesPage({ problemaIdInicial = null }) {
 
   useEffect(() => {
     const parametros = new URLSearchParams(window.location.search);
-    const id = problemaIdInicial ?? parametros.get("problemaId");
+    const id = problemaIdInicial ?? parametros.get("problemaId") ?? "1";
     const origemUrl = parametros.get("origem");
 
     setOrigem(origemUrl === "mapa" ? "mapa" : "notificacoes");
 
-    const problemasSalvos = lerLista("problemas");
-    const resolvidos = lerLista("problemasResolvidos");
+    fetch(`/api/problemas/${encodeURIComponent(id)}`)
+      .then((resposta) => {
+        if (!resposta.ok) throw new Error("Não encontrado");
+        return resposta.json();
+      })
+      .then((selecionado) => {
+        const nomeSalvo = localStorage.getItem("nomeUsuario");
+        const nomeUsuario =
+          nomeSalvo && nomeSalvo.trim() !== ""
+            ? nomeSalvo
+            : "João da Silva";
 
-    let selecionado = null;
+        const categoriaOriginal =
+          selecionado.categoria || selecionado.titulo;
 
-    if (id) {
-      selecionado = problemasSalvos.find(
-        (item) => String(item.id) === String(id)
-      );
+        setProblema({
+          ...selecionado,
+          categoria: obterCategoria(categoriaOriginal),
+          icone: obterIcone(categoriaOriginal),
+          endereco: selecionado.endereco || "Endereço não informado",
+          data: selecionado.data || "Data não informada",
+          horario: selecionado.horario || "Horário não informado",
+          morador: selecionado.morador || nomeUsuario,
+          descricao: selecionado.descricao || "Sem descrição disponível.",
+        });
 
-      if (!selecionado) {
-        selecionado = problemasFixos[id] || null;
+        setVoto(selecionado.status === "Resolvido" ? "resolvido" : "");
+        setCarregado(true);
+      })
+      .catch(() => {
+        setNaoEncontrado(true);
+        setCarregado(true);
+      });
+  }, [problemaIdInicial]);
+
+  async function registrarVoto(novoVoto) {
+    const resposta = await fetch(
+      `/api/problemas/${encodeURIComponent(problema.id)}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          status: novoVoto === "resolvido" ? "Resolvido" : "Aberto",
+        }),
       }
-    } else {
-      selecionado = problemasFixos[1];
-    }
+    ).catch(() => null);
 
-    if (!selecionado) {
-      setNaoEncontrado(true);
-      setCarregado(true);
+    if (!resposta || !resposta.ok) {
+      setMensagemVoto("Não foi possível registrar seu voto. Tente novamente.");
       return;
     }
 
-    const nomeSalvo = localStorage.getItem("nomeUsuario");
-    const nomeUsuario =
-      nomeSalvo && nomeSalvo.trim() !== ""
-        ? nomeSalvo
-        : "João da Silva";
-
-    const categoriaOriginal =
-      selecionado.categoria || selecionado.titulo;
-
-    const categoria = obterCategoria(categoriaOriginal);
-
-    setProblema({
-      ...selecionado,
-      categoria,
-      icone: obterIcone(categoriaOriginal),
-      endereco: selecionado.endereco || "Endereço não informado",
-      data: selecionado.data || "Data não informada",
-      horario: selecionado.horario || "Horário não informado",
-      morador: selecionado.morador || nomeUsuario,
-      descricao: selecionado.descricao || "Sem descrição disponível.",
-    });
-
-    const votoResolvido = resolvidos.some(
-      (item) => String(item) === String(selecionado.id)
-    );
-
-    setVoto(votoResolvido ? "resolvido" : "");
-    setCarregado(true);
-  }, [problemaIdInicial]);
-
-  function registrarVoto(novoVoto) {
-    const resolvidos = lerLista("problemasResolvidos");
-    let atualizados = resolvidos;
-
-    if (novoVoto === "resolvido") {
-      if (
-        !atualizados.some(
-          (item) => String(item) === String(problema.id)
-        )
-      ) {
-        atualizados = [...atualizados, problema.id];
-      }
-
-      setMensagemVoto(
-        "Obrigado! Seu voto indica que o problema foi resolvido."
-      );
-    } else {
-      atualizados = atualizados.filter(
-        (item) => String(item) !== String(problema.id)
-      );
-
-      setMensagemVoto(
-        "Obrigado! Seu voto indica que o problema ainda existe."
-      );
-    }
-
-    localStorage.setItem(
-      "problemasResolvidos",
-      JSON.stringify(atualizados)
+    setMensagemVoto(
+      novoVoto === "resolvido"
+        ? "Obrigado! Seu voto indica que o problema foi resolvido."
+        : "Obrigado! Seu voto indica que o problema ainda existe."
     );
 
     setVoto(novoVoto);
   }
 
-  function excluirProblema() {
+  async function excluirProblema() {
     const confirmar = window.confirm(
       "Tem certeza que deseja excluir este problema?"
     );
@@ -236,35 +139,19 @@ export default function DetalhesPage({ problemaIdInicial = null }) {
       return;
     }
 
-    const problemasSalvos = lerLista("problemas");
-    const problemasAtualizados = problemasSalvos.filter(
-      (item) => String(item.id) !== String(problema.id)
-    );
+    const resposta = await fetch(
+      `/api/problemas/${encodeURIComponent(problema.id)}`,
+      { method: "DELETE" }
+    ).catch(() => null);
 
-    localStorage.setItem(
-      "problemas",
-      JSON.stringify(problemasAtualizados)
-    );
-
-    const excluidos = lerLista("problemasExcluidos");
-
-    if (
-      !excluidos.some(
-        (item) => String(item) === String(problema.id)
-      )
-    ) {
-      excluidos.push(problema.id);
+    if (!resposta || !resposta.ok) {
+      window.alert("Não foi possível excluir o problema.");
+      return;
     }
-
-    localStorage.setItem(
-      "problemasExcluidos",
-      JSON.stringify(excluidos)
-    );
 
     window.location.href =
       origem === "mapa" ? "/" : "/notificacoes";
   }
-
   if (!carregado) {
     return (
       <main className={styles.container}>
