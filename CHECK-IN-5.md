@@ -97,17 +97,8 @@ navegador. Segundo os testes relatados:
 -   Após a exclusão do problema de teste, o arquivo voltou a conter os
     cinco problemas originais.
 
-## 7. Pontos para confirmar com o professor
 
-1.  No próximo Check-in, será necessário implementar cadastro e login
-    reais, com senha e sessão, ou apenas relacionar os usuários aos
-    problemas por meio da API?
-2.  O armazenamento em arquivo JSON é aceito como persistência ou será
-    esperado o uso de um banco de dados?
-3.  As fotos podem continuar armazenadas em base64 dentro do JSON ou
-    devem ser salvas como arquivos?
-
-## 8. Resultado
+## 7. Resultado
 
 O Check-in 5 implementou uma API interna no Next.js e integrou a
 consulta, o cadastro, a atualização de status e a exclusão dos
